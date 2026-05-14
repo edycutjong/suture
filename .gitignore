@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Next.js
+dashboard/.next/
+dashboard/out/
+
+# Python venv
+agent/venv/
+agent/.venv/
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Docker
+*.log
+
+# Coverage
+htmlcov/
+.coverage
+coverage/
+.nyc_output/
+
+# Misc
+*.bak
+*.tmp
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Generated assets
+assets/
