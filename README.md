@@ -5,7 +5,7 @@
 
   <br/>
 
-  [![Live Demo](https://img.shields.io/badge/🚀_Live-Demo-06b6d4?style=for-the-badge)](https://suture-demo.vercel.app)
+  [![Live Demo](https://img.shields.io/badge/🚀_Live-Demo-06b6d4?style=for-the-badge)](https://suture.edycu.dev)
   [![Built for Google Cloud Rapid Agent](https://img.shields.io/badge/Devpost-Google_Cloud_Rapid_Agent-8b5cf6?style=for-the-badge)](https://devpost.com)
 
   <br/>
@@ -46,6 +46,30 @@ Schema drift is the #1 cause of data pipeline failures. When an upstream source 
 - 🛡️ **Observability:** Military-grade SOC dashboard providing real-time oversight of the healing pipeline.
 
 ## 🏗️ Architecture & Tech Stack
+
+```mermaid
+flowchart LR
+    W(["🔔 Fivetran\nWebhook"])
+    D["01 · DETECT\ndetector.py"]
+    DI["02 · DIAGNOSE\ndiagnoser.py"]
+    M["03 · MAP\nmapper.py"]
+    P["04 · PATCH\npatcher.py"]
+    V["05 · VERIFY\nverifier.py"]
+    H(["✅ HEALED\n< 60 seconds"])
+
+    G(["✦ Gemini 3 Pro\nVertex AI"])
+    FT(["⚡ Fivetran\nREST API"])
+    PH(["📡 Arize\nPhoenix"])
+    SB(["🗄 Supabase"])
+
+    W --> D --> DI --> M --> P --> V --> H
+
+    G -- semantic reasoning --> M
+    FT -- PATCH /schemas --> P
+
+    D & DI & M & P & V -. traces .-> PH
+    DI & P & V -. state .-> SB
+```
 
 | Layer | Technology |
 |---|---|
