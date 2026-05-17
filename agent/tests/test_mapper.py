@@ -29,6 +29,51 @@ def mapper():
     return Mapper(MagicMock(), MagicMock(), MagicMock())
 
 
+class TestReasonMappings:
+    @pytest.fixture
+    def mock_deps(self):
+        from unittest.mock import AsyncMock, MagicMock
+        gemini = AsyncMock()
+        supabase = AsyncMock()
+        phoenix = MagicMock()
+        return gemini, supabase, phoenix
+
+    @pytest.fixture
+    def mapper(self, mock_deps):
+        gemini, supabase, phoenix = mock_deps
+        return Mapper(gemini, supabase, phoenix)
+
+    @pytest.mark.asyncio
+    async def test_reason_mappings(self, mapper, mock_deps):
+        gemini, supabase, phoenix = mock_deps
+        diff = make_diff(missing=["annual_revenue"], new=["revenue"])
+        mappings = [make_mapping("revenue", "annual_revenue")]
+        gemini.reason_schema_diff.return_value = mappings
+        
+        result = await mapper.map_schema_diff(diff, "T", "inc_1", "trace_1")
+        
+        assert result == mappings
+        assert diff.mappings == mappings
+        gemini.reason_schema_diff.assert_called_once_with(
+            missing_columns=["annual_revenue"],
+            new_columns=["revenue"],
+            table_name="T"
+        )
+        supabase.update_incident.assert_called()
+        phoenix.add_span.assert_called()
+
+    @pytest.mark.asyncio
+    async def test_reason_mappings_empty(self, mapper, mock_deps):
+        gemini, supabase, phoenix = mock_deps
+        diff = make_diff(missing=["missing_col"])
+        gemini.reason_schema_diff.return_value = []
+        
+        result = await mapper.map_schema_diff(diff, "T", "inc_1", "trace_1")
+        
+        assert result == []
+        supabase.update_incident.assert_called()
+        # Should handle empty mappings gracefully (confidence_score = 0.0)
+
 class TestFormatReasoning:
     def test_shows_missing_columns(self, mapper):
         diff = make_diff(missing=["revenue"], new=["annual_revenue"])

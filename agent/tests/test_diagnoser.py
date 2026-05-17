@@ -13,6 +13,67 @@ def make_schema(table: str, col_names: list[str]) -> TableSchema:
     )
 
 
+def make_diff(missing=None, new=None, matched=None):
+    return SchemaDiff(
+        missing_columns=missing or [],
+        new_columns=new or [],
+        matched_columns=matched or [],
+    )
+
+
+class TestDiagnose:
+    @pytest.fixture
+    def mock_deps(self):
+        from unittest.mock import AsyncMock, MagicMock
+        fivetran = AsyncMock()
+        fivetran.mode = "live"
+        supabase = AsyncMock()
+        phoenix = MagicMock()
+        return fivetran, supabase, phoenix
+
+    @pytest.fixture
+    def diagnoser(self, mock_deps):
+        fivetran, supabase, phoenix = mock_deps
+        return Diagnoser(fivetran, supabase, phoenix)
+
+    @pytest.mark.asyncio
+    async def test_diagnose(self, diagnoser, mock_deps):
+        fivetran, supabase, phoenix = mock_deps
+        source_schema = make_schema("T", ["id", "new_col"])
+        dest_schema = make_schema("T", ["id", "old_col"])
+        fivetran.discover_schema.side_effect = [source_schema, dest_schema]
+        
+        diff = await diagnoser.diagnose("conn_1", "inc_1", "trace_1")
+        
+        assert "old_col" in diff.missing_columns
+        assert "new_col" in diff.new_columns
+        supabase.update_incident.assert_called()
+        phoenix.add_span.assert_called()
+
+    @pytest.mark.asyncio
+    async def test_get_destination_schema_live(self, diagnoser, mock_deps):
+        fivetran, _, _ = mock_deps
+        fivetran.mode = "live"
+        schema = make_schema("T", ["id"])
+        fivetran.discover_schema.return_value = schema
+        
+        result = await diagnoser._get_destination_schema("conn_1")
+        assert result == schema
+        fivetran.discover_schema.assert_called_once_with("conn_1")
+
+    @pytest.mark.asyncio
+    async def test_get_destination_schema_mock(self, diagnoser, mock_deps):
+        fivetran, _, _ = mock_deps
+        fivetran.mode = "mock"
+        fivetran._mock_schema_state = "after"
+        schema = make_schema("T", ["id"])
+        fivetran.discover_schema.return_value = schema
+        
+        result = await diagnoser._get_destination_schema("conn_1")
+        assert result == schema
+        fivetran.discover_schema.assert_called_once_with("conn_1")
+        assert fivetran._mock_schema_state == "after"  # restored
+
 class TestComputeDiff:
     @pytest.fixture
     def diagnoser(self):

@@ -21,6 +21,35 @@ def patcher():
     return Patcher(MagicMock(), MagicMock(), MagicMock())
 
 
+class TestApplyPatch:
+    @pytest.fixture
+    def mock_deps(self):
+        from unittest.mock import AsyncMock, MagicMock
+        fivetran = AsyncMock()
+        supabase = AsyncMock()
+        phoenix = MagicMock()
+        return fivetran, supabase, phoenix
+
+    @pytest.fixture
+    def patcher(self, mock_deps):
+        fivetran, supabase, phoenix = mock_deps
+        return Patcher(fivetran, supabase, phoenix)
+
+    @pytest.mark.asyncio
+    async def test_apply_patch(self, patcher, mock_deps):
+        fivetran, supabase, phoenix = mock_deps
+        mappings = [make_mapping("annual_revenue", "revenue")]
+        new_columns = ["new_field"]
+        fivetran.modify_schema.return_value = {"success": True}
+        
+        result = await patcher.apply_patch("conn_1", mappings, new_columns, "inc_1", "trace_1")
+        
+        assert result == {"success": True}
+        fivetran.modify_schema.assert_called_once()
+        supabase.update_incident.assert_called()
+        supabase.update_pipeline_status.assert_called_once()
+        phoenix.add_span.assert_called()
+
 class TestBuildPatch:
     def test_single_mapping(self, patcher):
         mappings = [make_mapping("annual_revenue", "revenue")]

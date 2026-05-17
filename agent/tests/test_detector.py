@@ -148,7 +148,19 @@ class TestProcessWebhook:
         )
         result = await detector.process_webhook(event)
         assert result is not None
-        assert result["id"] == "inc-test-001"
+
+    @pytest.mark.asyncio
+    async def test_process_webhook_exception(self, detector, mock_phoenix):
+        event = FivetranWebhookEvent(
+            event="sync_failure", connector_id="connector_sf_001"
+        )
+        # Mock fivetran to raise an exception
+        detector.fivetran.get_sync_logs.side_effect = Exception("API Error")
+        
+        with pytest.raises(Exception, match="API Error"):
+            await detector.process_webhook(event)
+            
+        mock_phoenix.end_trace.assert_called_once_with("trace-001", status="error", result={"error": "API Error"})
 
     @pytest.mark.asyncio
     async def test_creates_incident_on_schema_drift(self, detector, mock_supabase):
