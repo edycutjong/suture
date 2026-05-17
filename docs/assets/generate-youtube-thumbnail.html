@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./_asset-utilities.css">
+</head>
+<body style="width: 1280px; height: 720px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+  <div class="background"></div>
+  <div class="grid-overlay"></div>
+  <div class="noise-overlay"></div>
+
+  <!-- Giant radial glow -->
+  <div style="position: absolute; width: 800px; height: 800px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1;"></div>
+
+  <div class="glass-panel" style="padding: 16px 32px; border-radius: var(--radius-full); margin-bottom: 40px; display: flex; align-items: center; gap: 16px;">
+    <div style="width: 16px; height: 16px; border-radius: 50%; background: var(--color-success); box-shadow: 0 0 16px var(--color-success);"></div>
+    <span class="mono-font" style="font-size: 24px; color: var(--text-hi); letter-spacing: 2px;">ZERO DOWNTIME</span>
+  </div>
+
+  <h1 class="display-font text-gradient" style="font-size: 140px; margin: 0; text-align: center; line-height: 1.1; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.8));">
+    AUTONOMOUS<br>SCHEMA HEALER
+  </h1>
+  
+  <div style="position: absolute; bottom: 40px; right: 40px; display: flex; align-items: center; gap: 16px; opacity: 0.8;">
+    <span class="display-font" style="font-size: 48px; color: #fff;">Suture</span>
+    <img src="./icon.svg" style="width: 64px; height: 64px; filter: drop-shadow(0 0 20px var(--primary-glow));">
+  </div>
+</body>
+</html>
