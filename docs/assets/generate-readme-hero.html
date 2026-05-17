@@ -2,78 +2,98 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, height=640">
+  <title>Suture — README Hero</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./_asset-utilities.css">
   <style>
-    .bullet { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-    .bullet svg { width: 20px; height: 20px; color: var(--primary); flex-shrink: 0; }
+    html, body { width: 1280px; height: 640px; }
+    .wrap { position: relative; width: 1280px; height: 640px; display: flex; }
+    .left { width: 45%; padding: 56px 48px 56px 64px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 10; }
+    .logo-row { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .logo-row img { width: 44px; height: 44px; filter: drop-shadow(0 0 16px var(--primary-glow)); }
+    .logo-row .version { font-family: var(--font-mono); font-size: 13px; color: var(--text-low); background: rgba(255,255,255,0.04); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-subtle); }
+    h1 { font-family: var(--font-display); font-size: 72px; font-weight: 800; margin: 0 0 12px 0; line-height: 1.05; background: var(--gradient-hero); background-clip: text; -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 30px var(--primary-glow)); }
+    .subtitle { font-family: var(--font-ui); font-size: 22px; color: var(--text-hi); margin: 0 0 28px 0; line-height: 1.4; }
+    .bullet { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-family: var(--font-mono); font-size: 14px; color: var(--text-mid); }
+    .bullet-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .bullet-dot.red { background: #EF4444; box-shadow: 0 0 8px rgba(239,68,68,0.5); }
+    .bullet-dot.purple { background: #A855F7; box-shadow: 0 0 8px rgba(168,85,247,0.5); }
+    .bullet-dot.blue { background: #3B82F6; box-shadow: 0 0 8px rgba(59,130,246,0.5); }
+    .bullet-dot.green { background: #22C55E; box-shadow: 0 0 8px rgba(34,197,94,0.5); }
+    .pills-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; }
+    .right { width: 55%; padding: 48px 56px 48px 0; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10; }
+    .console { width: 100%; height: 100%; backdrop-filter: blur(20px) saturate(1.4); background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.1); border-top-color: rgba(255,255,255,0.18); border-radius: 16px; overflow: hidden; box-shadow: 0 0 1px 0 rgba(255,255,255,0.1) inset, 0 8px 40px rgba(0,0,0,0.4), 0 0 80px -20px var(--primary-glow); display: flex; flex-direction: column; }
+    .console-header { padding: 14px 20px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.25); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.r { background: #EF4444; } .dot.y { background: #F59E0B; } .dot.g { background: #22C55E; }
+    .console-title { font-family: var(--font-mono); font-size: 12px; color: var(--text-low); margin-left: 10px; letter-spacing: 1px; }
+    .console-body { padding: 20px; font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: var(--text-mid); flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .log-line .ts { color: var(--text-low); }
+    .log-line .info { color: #3B82F6; }
+    .log-line .warn { color: #EF4444; }
+    .log-line .ai { color: #A855F7; }
+    .log-line .patch { color: #3B82F6; }
+    .log-line .ok { color: #22C55E; }
+    .ai-box { padding: 10px 14px; background: rgba(168,85,247,0.08); border-radius: 10px; border: 1px solid rgba(168,85,247,0.18); color: var(--text-hi); font-size: 12px; line-height: 1.5; }
+    .diff-block { padding-left: 14px; border-left: 2px solid var(--border-default); }
+    .diff-block .add { color: var(--text-hi); }
+    .diff-block .del { color: var(--text-low); }
   </style>
 </head>
-<body style="width: 1280px; height: 640px;">
-  <div class="background" style="opacity: 0.7;"></div>
-  <div class="grid-overlay"></div>
-  <div class="noise-overlay"></div>
+<body>
+  <div class="wrap">
+    <div class="background"></div>
+    <div class="grid-overlay"></div>
+    <div class="aurora-orb primary" style="width:400px;height:400px;top:-60px;left:-40px;"></div>
+    <div class="aurora-orb accent" style="width:350px;height:350px;bottom:-80px;right:60px;"></div>
 
-  <div style="display: flex; height: 100%; width: 100%;">
-    <!-- Left 40% Content -->
-    <div style="width: 45%; padding: 64px; display: flex; flex-direction: column; justify-content: center;">
-      <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
-        <img src="./icon.svg" style="width: 48px; height: 48px;">
-        <span class="mono-font" style="font-size: 16px; color: var(--text-mid); letter-spacing: 2px;">V1.0.0</span>
+    <div class="left">
+      <div class="logo-row">
+        <img src="./icon.svg" alt="Suture">
+        <span class="version">v1.0.0</span>
       </div>
-      
-      <h1 class="display-font text-gradient" style="font-size: 80px; margin: 0 0 16px 0; line-height: 1.1;">Suture</h1>
-      
-      <p style="font-size: 24px; color: var(--text-hi); margin: 0 0 32px 0; line-height: 1.4;">
-        Autonomous Fivetran schema drift healer.
-      </p>
-
-      <div class="mono-font" style="font-size: 16px; color: var(--text-mid); margin-bottom: 40px;">
-        <div class="bullet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Detects drift via webhooks</div>
-        <div class="bullet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Gemini 3 semantic reasoning</div>
-        <div class="bullet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Fivetran REST API patching</div>
-        <div class="bullet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Zero downtime resolution</div>
+      <h1>Suture</h1>
+      <p class="subtitle">Autonomous Fivetran schema drift healer powered by Gemini 3 reasoning.</p>
+      <div style="margin-bottom: 28px;">
+        <div class="bullet"><span class="bullet-dot red"></span> Detects drift via webhooks</div>
+        <div class="bullet"><span class="bullet-dot purple"></span> Gemini 3 semantic reasoning</div>
+        <div class="bullet"><span class="bullet-dot blue"></span> Fivetran REST API patching</div>
+        <div class="bullet"><span class="bullet-dot green"></span> Zero downtime resolution</div>
       </div>
-      
-      <!-- Tech Pills Footer -->
-      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto;">
+      <div class="pills-row">
         <span class="tech-pill">Python</span>
         <span class="tech-pill">FastAPI</span>
-        <span class="tech-pill">Gemini</span>
+        <span class="tech-pill">Gemini 3</span>
         <span class="tech-pill">Fivetran</span>
-        <span class="tech-pill">Next.js</span>
+        <span class="tech-pill">Next.js 16</span>
       </div>
     </div>
-    
-    <!-- Right 55% Visual -->
-    <div style="width: 55%; padding: 64px 64px 64px 0; display: flex; align-items: center; justify-content: center;">
-      <div class="glass-panel" style="width: 100%; height: 100%; display: flex; flex-direction: column; overflow: hidden; position: relative; box-shadow: var(--shadow-glow);">
-        <!-- Header -->
-        <div style="padding: 16px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.2);">
-          <div style="width: 12px; height: 12px; border-radius: 50%; background: var(--color-error);"></div>
-          <div style="width: 12px; height: 12px; border-radius: 50%; background: var(--color-warning);"></div>
-          <div style="width: 12px; height: 12px; border-radius: 50%; background: var(--color-success);"></div>
-          <span class="mono-font" style="font-size: 14px; color: var(--text-low); margin-left: 12px;">agent_activity_log</span>
+
+    <div class="right">
+      <div class="console">
+        <div class="console-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="console-title">agent_activity_log</span>
         </div>
-        <!-- Console content -->
-        <div class="mono-font" style="padding: 24px; font-size: 14px; line-height: 1.6; color: var(--text-mid); display: flex; flex-direction: column; gap: 12px;">
-          <div><span style="color: var(--text-low);">[03:14:02]</span> <span style="color: var(--color-info);">INFO</span>: Webhook received. Pipeline: salesforce_prod</div>
-          <div><span style="color: var(--text-low);">[03:14:03]</span> <span style="color: var(--color-error);">WARN</span>: Schema drift detected in table `opportunities`</div>
-          <div style="padding-left: 16px; border-left: 2px solid var(--border-default);">
-            <div style="color: var(--text-hi);">- source: `arr_amount`</div>
-            <div style="color: var(--text-low);">- dest: `annual_revenue` (Missing)</div>
+        <div class="console-body">
+          <div class="log-line"><span class="ts">[03:14:02]</span> <span class="info">INFO</span>: Webhook received. Pipeline: salesforce_prod</div>
+          <div class="log-line"><span class="ts">[03:14:03]</span> <span class="warn">WARN</span>: Schema drift detected in `opportunities`</div>
+          <div class="diff-block">
+            <div class="add">- source: `arr_amount`</div>
+            <div class="del">- dest: `annual_revenue` (Missing)</div>
           </div>
-          <div><span style="color: var(--text-low);">[03:14:05]</span> <span style="color: var(--accent);">AI_REASONING</span>: Executing semantic mapper (Gemini 3 Pro)...</div>
-          <div style="padding: 12px; background: rgba(168, 85, 247, 0.1); border-radius: var(--radius-8); border: 1px solid rgba(168, 85, 247, 0.2); color: var(--text-hi);">
-            "The upstream field `arr_amount` is highly correlated with the missing downstream field `annual_revenue` based on data types and contextual metadata. Confidence: 98%."
-          </div>
-          <div><span style="color: var(--text-low);">[03:14:08]</span> <span style="color: var(--color-info);">PATCH</span>: Executing Fivetran API update...</div>
-          <div><span style="color: var(--text-low);">[03:14:12]</span> <span style="color: var(--color-success);">SUCCESS</span>: Connector patched. Sync triggered. MTTR: 10s</div>
+          <div class="log-line"><span class="ts">[03:14:05]</span> <span class="ai">AI_REASONING</span>: Executing semantic mapper…</div>
+          <div class="ai-box">"Field `arr_amount` is highly correlated with `annual_revenue` based on data types and metadata. Confidence: 98%."</div>
+          <div class="log-line"><span class="ts">[03:14:08]</span> <span class="patch">PATCH</span>: Executing Fivetran API update…</div>
+          <div class="log-line"><span class="ts">[03:14:12]</span> <span class="ok">SUCCESS</span>: Connector patched. Sync triggered. MTTR: 10s ✓</div>
         </div>
       </div>
     </div>
+
+    <div class="noise-overlay"></div>
   </div>
 </body>
 </html>
