@@ -2,7 +2,7 @@
 node_modules/
 __pycache__/
 *.pyc
-.pyo
+*.pyo
 *.egg-info/
 dist/
 build/
@@ -12,16 +12,25 @@ build/
 .env
 .env.local
 .env.*.local
+.env.*
+!.env.example
 
-# Next.js
+# Next.js / Vercel
 dashboard/.next/
 dashboard/out/
+.vercel/
+
+# Python tooling caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+*.pyo
 
 # Python venv
+venv/
+.venv/
 agent/venv/
 agent/.venv/
-.venv/
-venv/
 
 # IDE
 .idea/
@@ -30,24 +39,26 @@ venv/
 *.swo
 *~
 .DS_Store
+.DS_Store?
 
-# Docker
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Coverage
 htmlcov/
 .coverage
+.coverage.*
 coverage/
 .nyc_output/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
 
 # Misc
 *.bak
 *.tmp
-
-# Environment variables
-.env
-.env.*
-!.env.example
-
-# Generated assets
-assets/
+*.pem
