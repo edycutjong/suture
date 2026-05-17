@@ -67,7 +67,7 @@ jobs:
 
       - name: Lint
         working-directory: ./agent
-        run: pip install ruff mypy pytest pytest-cov && ruff check .
+        run: pip install ruff mypy pytest pytest-cov pytest-asyncio && ruff check .
 
       - name: Type check
         working-directory: ./agent
