@@ -62,3 +62,6 @@ next-env.d.ts
 *.bak
 *.tmp
 *.pem
+
+# Generated assets (tooling + large images)
+docs/assets/
