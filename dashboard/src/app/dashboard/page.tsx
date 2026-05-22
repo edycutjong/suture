@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { AgentLog } from '@/components/AgentLog';
 import { DemoControls } from '@/components/DemoControls';
 import { IncidentTimeline } from '@/components/IncidentTimeline';
@@ -124,17 +125,15 @@ export default function Dashboard() {
       {/* ── Header ───────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-(--border-default) bg-(--bg-primary)/90 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src="/icon.svg" alt="Suture Logo" className="w-7 h-7" />
-            <div>
-              <h1 className="font-heading text-base text-(--text-primary) tracking-widest">
-                SUTURE
-              </h1>
-              <p className="text-[10px] text-(--text-muted) tracking-wider">
-                AUTONOMOUS PIPELINE HEALING
-              </p>
+          <Link href="/" className="flex items-center gap-3 group">
+            <img src="/icon.svg" alt="Suture Logo" className="w-8 h-8 transition-transform group-hover:scale-105" />
+            <div className="flex items-center gap-2">
+              <span className="font-heading text-lg tracking-widest text-(--text-primary)">SUTURE</span>
+              <span className="text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono">
+                v1.0.0
+              </span>
             </div>
-          </div>
+          </Link>
 
           <div className="flex items-center gap-6">
             {/* Summary pills */}

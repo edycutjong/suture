@@ -63,15 +63,15 @@ export default function LandingPage() {
       {/* ── Navigation ────────────────────────────────────────── */}
       <nav className="border-b border-white/5 bg-[#0a0e1a]/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src="/icon.svg" alt="Suture Logo" className="w-8 h-8" />
-            <div>
+          <Link href="/" className="flex items-center gap-3 group">
+            <img src="/icon.svg" alt="Suture Logo" className="w-8 h-8 transition-transform group-hover:scale-105" />
+            <div className="flex items-center gap-2">
               <span className="font-heading text-lg tracking-widest text-[#f1f5f9]">SUTURE</span>
-              <span className="ml-2 text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono">
+              <span className="text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono">
                 v1.0.0
               </span>
             </div>
-          </div>
+          </Link>
           <div className="flex items-center gap-4">
             <a
               href="https://github.com/edycutjong/suture"
@@ -365,19 +365,61 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Technology Badges ───────────────────────────────────── */}
-      <section className="py-12 border-t border-white/5 bg-slate-950/40 relative z-10 w-full">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-[10px] font-heading tracking-widest text-slate-500 mb-6">
-            INTEGRATED STACK
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:opacity-90 transition-all duration-300">
-            <span className="font-heading text-xs tracking-wider text-white">FIVETRAN API</span>
-            <span className="font-heading text-xs tracking-wider text-white">GEMINI 3 PRO</span>
-            <span className="font-heading text-xs tracking-wider text-white">ARIZE PHOENIX</span>
-            <span className="font-heading text-xs tracking-wider text-white">SUPABASE DB</span>
-            <span className="font-heading text-xs tracking-wider text-white">FASTAPI</span>
-            <span className="font-heading text-xs tracking-wider text-white">NEXT.JS 16</span>
+      {/* ── Sponsors & Integrations ────────────────────────────── */}
+      <section className="py-16 border-t border-white/5 bg-slate-950/40 relative z-10 w-full">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-10">
+            <p className="text-[10px] font-heading tracking-widest text-cyan-400">
+              OFFICIAL SPONSORS & INTEGRATIONS
+            </p>
+            <h3 className="text-xl font-bold mt-2 text-white">Powering Autonomous Pipeline Healing</h3>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {/* Google Cloud */}
+            <div className="glass-card p-5 flex items-center gap-4 border border-white/5 bg-slate-900/20 backdrop-blur-md rounded-xl hover:border-cyan-500/30 hover:bg-slate-900/40 transition-all group">
+              <div className="p-2.5 rounded-lg bg-red-500/10 border border-red-500/20 group-hover:bg-red-500/20 transition-all flex items-center justify-center">
+                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2.5L4 7.12v9.25l8 4.63 8-4.63V7.12L12 2.5z" fill="#4285F4" />
+                  <path d="M12 11.5L4 7.12l8-4.62 8 4.62-8 4.38z" fill="#EA4335" />
+                  <path d="M4 16.37V7.12L12 11.5v9.25L4 16.37z" fill="#34A853" />
+                  <path d="M12 11.5l8-4.38v9.25l-8 4.63v-9.5z" fill="#FBBC05" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-heading text-xs text-white tracking-wider">Google Cloud</h4>
+                <p className="text-[11px] text-slate-400 mt-0.5">Gemini 3 Reasoning Engine & Cloud Run Hosting</p>
+              </div>
+            </div>
+
+            {/* Fivetran */}
+            <div className="glass-card p-5 flex items-center gap-4 border border-white/5 bg-slate-900/20 backdrop-blur-md rounded-xl hover:border-cyan-500/30 hover:bg-slate-900/40 transition-all group">
+              <div className="p-2.5 rounded-lg bg-orange-500/10 border border-orange-500/20 group-hover:bg-orange-500/20 transition-all flex items-center justify-center">
+                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 4h16v4H8v4h10v4H8v4h10v4H4V4z" fill="#FF5C35" />
+                  <circle cx="16" cy="16" r="3" fill="#06B6D4" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-heading text-xs text-white tracking-wider">Fivetran</h4>
+                <p className="text-[11px] text-slate-400 mt-0.5">REST APIs & Custom Connector Management</p>
+              </div>
+            </div>
+
+            {/* Arize Phoenix */}
+            <div className="glass-card p-5 flex items-center gap-4 border border-white/5 bg-slate-900/20 backdrop-blur-md rounded-xl hover:border-cyan-500/30 hover:bg-slate-900/40 transition-all group">
+              <div className="p-2.5 rounded-lg bg-pink-500/10 border border-pink-500/20 group-hover:bg-pink-500/20 transition-all flex items-center justify-center">
+                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L9 8h6l-3-6z" fill="#FB7185" />
+                  <path d="M6 10l5 10v-8L6 10z" fill="#E11D48" />
+                  <path d="M18 10l-5 10v-8l5-10z" fill="#BE123C" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-heading text-xs text-white tracking-wider">Arize Phoenix</h4>
+                <p className="text-[11px] text-slate-400 mt-0.5">Agent Tracing, Spans, & Evals Platform</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
