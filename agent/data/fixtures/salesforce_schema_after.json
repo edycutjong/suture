@@ -1,0 +1,14 @@
+{
+  "table": "Opportunity",
+  "columns": [
+    {"name": "id", "type": "STRING", "enabled": true},
+    {"name": "name", "type": "STRING", "enabled": true},
+    {"name": "annual_revenue", "type": "FLOAT", "enabled": true},
+    {"name": "quarterly_revenue", "type": "FLOAT", "enabled": true},
+    {"name": "stage", "type": "STRING", "enabled": true},
+    {"name": "close_date", "type": "DATE", "enabled": true},
+    {"name": "owner_id", "type": "STRING", "enabled": true}
+  ],
+  "schema_hash": "sf_opp_v2_def456",
+  "last_synced_at": "2026-05-14T03:00:00Z"
+}

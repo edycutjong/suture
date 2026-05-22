@@ -1,0 +1,35 @@
+{
+  "connector_id": "connector_sf_001",
+  "sync_id": "sync_20260514_030000",
+  "status": "FAILED",
+  "started_at": "2026-05-14T03:00:00Z",
+  "failed_at": "2026-05-14T03:00:12Z",
+  "logs": [
+    {
+      "timestamp": "2026-05-14T03:00:05Z",
+      "level": "WARNING",
+      "message": "Schema change detected in source table 'Opportunity'"
+    },
+    {
+      "timestamp": "2026-05-14T03:00:08Z",
+      "level": "ERROR",
+      "message": "Schema mapping error: column 'revenue' not found in source. Expected columns: [id, name, annual_revenue, quarterly_revenue, stage, close_date, owner_id]"
+    },
+    {
+      "timestamp": "2026-05-14T03:00:10Z",
+      "level": "ERROR",
+      "message": "New unmapped column detected: 'quarterly_revenue' (FLOAT)"
+    },
+    {
+      "timestamp": "2026-05-14T03:00:12Z",
+      "level": "CRITICAL",
+      "message": "Sync aborted: unresolvable schema mismatch. Manual intervention required."
+    }
+  ],
+  "error_code": "SCHEMA_MISMATCH",
+  "error_details": {
+    "missing_columns": ["revenue"],
+    "new_columns": ["annual_revenue", "quarterly_revenue"],
+    "table": "Opportunity"
+  }
+}

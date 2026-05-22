@@ -12,17 +12,30 @@ def test_init(gemini_client):
     assert gemini_client.model_name == "gemini-3-pro"
     assert gemini_client._client is None
 
-def test_get_client_success(gemini_client):
+def test_get_client_success(gemini_client, monkeypatch):
+    monkeypatch.setenv("AGENT_MODE", "live")
     with patch.dict('sys.modules', {'google.genai': MagicMock()}):
         import sys
         sys.modules['google.genai'].Client = MagicMock(return_value="mock_genai_client")
         client = gemini_client._get_client()
         assert client == "mock_genai_client"
 
-def test_get_client_import_error(gemini_client):
-    with patch.dict('sys.modules', {'google': None}):
+def test_get_client_import_error(gemini_client, monkeypatch):
+    monkeypatch.setenv("AGENT_MODE", "live")
+    with patch.dict('sys.modules', {'google.genai': None, 'google': None}):
         client = gemini_client._get_client()
         assert client is None
+
+def test_get_client_missing_api_key(gemini_client, monkeypatch):
+    monkeypatch.setenv("AGENT_MODE", "live")
+    gemini_client.api_key = ""
+    client = gemini_client._get_client()
+    assert client is None
+
+def test_get_client_mock_mode(gemini_client, monkeypatch):
+    monkeypatch.setenv("AGENT_MODE", "mock")
+    client = gemini_client._get_client()
+    assert client is None
 
 @pytest.mark.asyncio
 async def test_reason_schema_diff_mock(gemini_client):

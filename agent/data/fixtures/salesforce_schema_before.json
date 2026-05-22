@@ -1,0 +1,13 @@
+{
+  "table": "Opportunity",
+  "columns": [
+    {"name": "id", "type": "STRING", "enabled": true},
+    {"name": "name", "type": "STRING", "enabled": true},
+    {"name": "revenue", "type": "FLOAT", "enabled": true},
+    {"name": "stage", "type": "STRING", "enabled": true},
+    {"name": "close_date", "type": "DATE", "enabled": true},
+    {"name": "owner_id", "type": "STRING", "enabled": true}
+  ],
+  "schema_hash": "sf_opp_v1_abc123",
+  "last_synced_at": "2026-05-13T12:00:00Z"
+}

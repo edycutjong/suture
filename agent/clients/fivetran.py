@@ -18,7 +18,7 @@ from models.schemas import TableSchema, SchemaColumn
 
 
 # Path to fixture data
-FIXTURES_DIR = Path(__file__).parent.parent.parent / "data" / "fixtures"
+FIXTURES_DIR = Path(__file__).parent.parent / "data" / "fixtures"
 
 
 class FivetranClient:
@@ -108,7 +108,7 @@ class FivetranClient:
             schema_data = resp.json().get("data", {})
             # Transform Fivetran schema format to our model
             tables = schema_data.get("schemas", {})
-            first_table = next(iter(tables.values()), {})
+            first_table: dict[str, Any] = next(iter(tables.values()), {})
             columns = [
                 SchemaColumn(name=name, type=col.get("type", "STRING"), enabled=col.get("enabled", True))
                 for name, col in first_table.get("tables", {}).get("columns", {}).items()

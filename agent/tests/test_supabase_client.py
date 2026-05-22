@@ -9,6 +9,13 @@ def supabase_client(monkeypatch):
     monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "fake_key")
     return SupabaseClient()
 
+@pytest.fixture
+def mock_supabase_client(monkeypatch):
+    """Client with empty credentials so _get_client() returns None (pure mock mode)."""
+    monkeypatch.delenv("SUPABASE_URL", raising=False)
+    monkeypatch.delenv("SUPABASE_SERVICE_ROLE_KEY", raising=False)
+    return SupabaseClient()
+
 def test_init(supabase_client):
     assert supabase_client.url == "http://fake"
 
@@ -26,8 +33,8 @@ def test_get_client_import_error(supabase_client):
 
 # --- Mock mode tests ---
 @pytest.mark.asyncio
-async def test_upsert_pipeline_mock(supabase_client):
-    supabase_client._client = None
+async def test_upsert_pipeline_mock(mock_supabase_client):
+    supabase_client = mock_supabase_client
     from models.schemas import SchemaDiff
     pipe = Pipeline(fivetran_connector_id="c1", connector_name="test", source_type="pg", destination_type="pg", status=PipelineStatus.HEALTHY, last_schema_diff=SchemaDiff(missing_columns=[], new_columns=[], matched_columns=[]))
     res = await supabase_client.upsert_pipeline(pipe)
@@ -35,61 +42,61 @@ async def test_upsert_pipeline_mock(supabase_client):
     assert supabase_client._mock_pipelines["c1"] == res
 
 @pytest.mark.asyncio
-async def test_get_pipeline_mock(supabase_client):
-    supabase_client._mock_pipelines["c1"] = {"id": "c1"}
-    res = await supabase_client.get_pipeline("c1")
+async def test_get_pipeline_mock(mock_supabase_client):
+    mock_supabase_client._mock_pipelines["c1"] = {"id": "c1"}
+    res = await mock_supabase_client.get_pipeline("c1")
     assert res == {"id": "c1"}
 
 @pytest.mark.asyncio
-async def test_list_pipelines_mock(supabase_client):
-    supabase_client._mock_pipelines["c1"] = {"id": "c1"}
-    res = await supabase_client.list_pipelines()
+async def test_list_pipelines_mock(mock_supabase_client):
+    mock_supabase_client._mock_pipelines["c1"] = {"id": "c1"}
+    res = await mock_supabase_client.list_pipelines()
     assert res == [{"id": "c1"}]
 
 @pytest.mark.asyncio
-async def test_update_pipeline_status_mock(supabase_client):
-    supabase_client._mock_pipelines["c1"] = {"id": "c1", "status": "unknown"}
-    res = await supabase_client.update_pipeline_status("c1", PipelineStatus.BROKEN)
+async def test_update_pipeline_status_mock(mock_supabase_client):
+    mock_supabase_client._mock_pipelines["c1"] = {"id": "c1", "status": "unknown"}
+    res = await mock_supabase_client.update_pipeline_status("c1", PipelineStatus.BROKEN)
     assert res["status"] == "broken"
-    assert supabase_client._mock_pipelines["c1"]["status"] == "broken"
-    res2 = await supabase_client.update_pipeline_status("fake", PipelineStatus.BROKEN)
+    assert mock_supabase_client._mock_pipelines["c1"]["status"] == "broken"
+    res2 = await mock_supabase_client.update_pipeline_status("fake", PipelineStatus.BROKEN)
     assert res2 == {}
 
 @pytest.mark.asyncio
-async def test_create_incident_mock(supabase_client):
+async def test_create_incident_mock(mock_supabase_client):
     from models.schemas import TableSchema
     inc = Incident(pipeline_id="p1", error_type=ErrorType.SCHEMA_DRIFT, status=IncidentStatus.DETECTED, source_schema=TableSchema(table="test", columns=[]), destination_schema=TableSchema(table="test", columns=[]))
-    res = await supabase_client.create_incident(inc)
+    res = await mock_supabase_client.create_incident(inc)
     assert "id" in res
-    assert len(supabase_client._mock_incidents) == 1
+    assert len(mock_supabase_client._mock_incidents) == 1
 
 @pytest.mark.asyncio
-async def test_update_incident_mock(supabase_client):
-    supabase_client._mock_incidents = [{"id": "inc1", "status": "unknown"}]
-    res = await supabase_client.update_incident("inc1", {"status": "resolved"})
+async def test_update_incident_mock(mock_supabase_client):
+    mock_supabase_client._mock_incidents = [{"id": "inc1", "status": "unknown"}]
+    res = await mock_supabase_client.update_incident("inc1", {"status": "resolved"})
     assert res["status"] == "resolved"
-    assert supabase_client._mock_incidents[0]["status"] == "resolved"
-    res2 = await supabase_client.update_incident("fake", {"status": "resolved"})
+    assert mock_supabase_client._mock_incidents[0]["status"] == "resolved"
+    res2 = await mock_supabase_client.update_incident("fake", {"status": "resolved"})
     assert res2 == {}
 
 @pytest.mark.asyncio
-async def test_list_incidents_mock(supabase_client):
-    supabase_client._mock_incidents = [{"id": "inc1"}]
-    res = await supabase_client.list_incidents()
+async def test_list_incidents_mock(mock_supabase_client):
+    mock_supabase_client._mock_incidents = [{"id": "inc1"}]
+    res = await mock_supabase_client.list_incidents()
     assert res == [{"id": "inc1"}]
 
 @pytest.mark.asyncio
-async def test_get_incident_mock(supabase_client):
-    supabase_client._mock_incidents = [{"id": "inc1"}]
-    res = await supabase_client.get_incident("inc1")
+async def test_get_incident_mock(mock_supabase_client):
+    mock_supabase_client._mock_incidents = [{"id": "inc1"}]
+    res = await mock_supabase_client.get_incident("inc1")
     assert res == {"id": "inc1"}
-    assert await supabase_client.get_incident("fake") is None
+    assert await mock_supabase_client.get_incident("fake") is None
 
 @pytest.mark.asyncio
-async def test_get_stats_mock(supabase_client):
-    supabase_client._mock_pipelines = {"c1": {}}
-    supabase_client._mock_incidents = [{"id": "inc1", "status": "resolved", "resolution_time_ms": 1000}]
-    stats = await supabase_client.get_stats()
+async def test_get_stats_mock(mock_supabase_client):
+    mock_supabase_client._mock_pipelines = {"c1": {}}
+    mock_supabase_client._mock_incidents = [{"id": "inc1", "status": "resolved", "resolution_time_ms": 1000}]
+    stats = await mock_supabase_client.get_stats()
     assert stats["total_pipelines"] == 1
     assert stats["total_incidents"] == 1
     assert stats["incidents_resolved"] == 1

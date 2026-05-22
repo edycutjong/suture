@@ -18,18 +18,23 @@ class GeminiClient:
 
     def __init__(self):
         self.api_key = os.getenv("GEMINI_API_KEY", "")
-        self.model_name = "gemini-3-pro"
+        self.model_name = os.getenv("GEMINI_MODEL", "gemini-3-pro")
         self._client = None
 
     def _get_client(self):
         """Lazy-initialize the Gemini client."""
-        if self._client is None:
-            try:
-                from google import genai
-                self._client = genai.Client(api_key=self.api_key)
-            except ImportError:
-                # Fallback for mock mode
-                self._client = None
+        if self._client is not None:
+            return self._client
+        if os.getenv("AGENT_MODE", "mock") == "mock":
+            return None
+        try:
+            from google import genai
+            if not self.api_key:
+                return None
+            self._client = genai.Client(api_key=self.api_key)
+        except ImportError:
+            # Fallback for mock mode
+            self._client = None
         return self._client
 
     async def reason_schema_diff(
