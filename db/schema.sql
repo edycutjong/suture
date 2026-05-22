@@ -21,7 +21,7 @@ CREATE TABLE suture_pipelines (
 -- Incident history
 CREATE TABLE suture_incidents (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    pipeline_id UUID REFERENCES suture_pipelines(id) ON DELETE CASCADE,
+    pipeline_id TEXT NOT NULL REFERENCES suture_pipelines(fivetran_connector_id) ON DELETE CASCADE,
     error_type TEXT NOT NULL,          -- 'schema_drift', 'auth_failure', 'rate_limit'
     error_message TEXT,
     source_schema JSONB,               -- schema snapshot at time of failure
