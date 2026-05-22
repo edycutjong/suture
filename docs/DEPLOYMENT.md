@@ -74,6 +74,11 @@ The Next.js dashboard compiles into a static asset build.
 ### Prerequisites
 - Vercel CLI installed (`npm install -g vercel`) or connected to GitHub.
 
+> [!IMPORTANT]
+> **Root Directory Setting**: Because the Next.js app is located in a subdirectory, you **must** configure Vercel to build from the `dashboard` folder.
+> - **In the Vercel Dashboard (GitHub/Gitlab Git integrations)**: Go to **Project Settings** → **General** → **Root Directory** and set it to `dashboard`.
+> - **In the Vercel CLI**: If deploying locally via CLI, run `vercel` from the root directory or ensure you tell it that the code is located in the `dashboard/` directory when prompted.
+
 ### Deployment Steps
 1. Navigate to the `dashboard` folder:
    ```bash
