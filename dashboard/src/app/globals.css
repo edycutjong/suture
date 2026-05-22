@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+/* ============================================
+   Suture — Design System Tokens
+   Military SOC / Command Center Aesthetic
+   ============================================ */
+
+:root {
+  /* Backgrounds */
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #0f1629;
+  --bg-card: #111827;
+  --bg-card-hover: #1a2235;
+  --bg-glass: rgba(17, 24, 39, 0.8);
+  --bg-glass-border: rgba(255, 255, 255, 0.06);
+
+  /* Accents */
+  --accent-primary: #06b6d4;
+  --accent-primary-glow: rgba(6, 182, 212, 0.15);
+  --accent-healthy: #22c55e;
+  --accent-healthy-glow: rgba(34, 197, 94, 0.15);
+  --accent-broken: #ef4444;
+  --accent-broken-glow: rgba(239, 68, 68, 0.15);
+  --accent-healing: #f59e0b;
+  --accent-healing-glow: rgba(245, 158, 11, 0.15);
+  --accent-ai: #a855f7;
+  --accent-ai-glow: rgba(168, 85, 247, 0.15);
+
+  /* Text */
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+
+  /* Borders */
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Base ────────────────────────────────────── */
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Typography ─────────────────────────────── */
+
+.font-heading {
+  font-family: var(--font-orbitron), monospace;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ── Glassmorphism Card ─────────────────────── */
+
+.glass-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: 12px;
+  backdrop-filter: blur(16px);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+}
+
+/* ── Status Glow ────────────────────────────── */
+
+.glow-healthy {
+  box-shadow: 0 0 20px var(--accent-healthy-glow), inset 0 0 20px var(--accent-healthy-glow);
+}
+
+.glow-broken {
+  box-shadow: 0 0 20px var(--accent-broken-glow), inset 0 0 20px var(--accent-broken-glow);
+}
+
+.glow-healing {
+  box-shadow: 0 0 20px var(--accent-healing-glow), inset 0 0 20px var(--accent-healing-glow);
+}
+
+.glow-primary {
+  box-shadow: 0 0 20px var(--accent-primary-glow), inset 0 0 20px var(--accent-primary-glow);
+}
+
+/* ── Pulse Animation ────────────────────────── */
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out forwards;
+}
+
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-right {
+  animation: slide-right 0.2s ease-out forwards;
+}
+
+/* ── Scrollbar ──────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* ── Terminal Log ───────────────────────────── */
+
+.terminal-log {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.terminal-log .log-timestamp {
+  color: var(--text-muted);
+}
+
+.terminal-log .log-info {
+  color: var(--accent-primary);
+}
+
+.terminal-log .log-warning {
+  color: var(--accent-healing);
+}
+
+.terminal-log .log-error {
+  color: var(--accent-broken);
+}
+
+.terminal-log .log-success {
+  color: var(--accent-healthy);
+}
+
+/* ── Number Roll Animation ──────────────────── */
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-count-up {
+  animation: count-up 0.6s ease-out forwards;
+}
