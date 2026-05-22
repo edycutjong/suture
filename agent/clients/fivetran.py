@@ -24,8 +24,10 @@ FIXTURES_DIR = Path(__file__).parent.parent / "data" / "fixtures"
 class FivetranClient:
     """Fivetran REST API client with mock and live modes."""
 
+    mode: str
+
     def __init__(self, mode: Optional[str] = None):
-        self.mode = mode or os.getenv("AGENT_MODE", "mock")
+        self.mode = mode or os.getenv("AGENT_MODE") or "mock"
         self.api_key = os.getenv("FIVETRAN_API_KEY", "")
         self.api_secret = os.getenv("FIVETRAN_API_SECRET", "")
         self.base_url = "https://api.fivetran.com/v1"
