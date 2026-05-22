@@ -1,7 +1,7 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, type RefObject } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
@@ -20,6 +20,8 @@ export default function LandingPage() {
   const [simulationStep, setSimulationStep] = useState(0);
   const [isSimulating, setIsSimulating] = useState(false);
   const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
+  const simulatorRef = useRef<HTMLElement>(null);
+  const hasAutoStarted = useRef(false);
 
   const clearAllTimeouts = () => {
     timeoutsRef.current.forEach((t) => clearTimeout(t));
@@ -52,6 +54,28 @@ export default function LandingPage() {
     return () => clearAllTimeouts();
   }, []);
 
+  useEffect(() => {
+    const el = simulatorRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAutoStarted.current) {
+          hasAutoStarted.current = true;
+          setIsSimulating(true);
+          setSimulationStep(1);
+          const t1 = setTimeout(() => setSimulationStep(2), 2000);
+          const t2 = setTimeout(() => setSimulationStep(3), 4000);
+          const t3 = setTimeout(() => setSimulationStep(4), 6000);
+          const t4 = setTimeout(() => setIsSimulating(false), 7500);
+          timeoutsRef.current = [t1, t2, t3, t4];
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0a0e1a] text-[#f1f5f9] overflow-x-hidden flex flex-col relative">
@@ -131,6 +155,28 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Stats Strip ──────────────────────────────────────── */}
+      <div className="border-y border-white/5 bg-slate-950/60 py-7 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div>
+            <p className="text-3xl font-black font-heading text-cyan-400">&lt;60s</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 tracking-widest uppercase">Mean Time to Heal</p>
+          </div>
+          <div>
+            <p className="text-3xl font-black font-heading text-white">7</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 tracking-widest uppercase">Fivetran API Methods</p>
+          </div>
+          <div>
+            <p className="text-3xl font-black font-heading text-purple-400">94%</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 tracking-widest uppercase">AI Mapping Confidence</p>
+          </div>
+          <div>
+            <p className="text-3xl font-black font-heading text-green-400">0</p>
+            <p className="text-[11px] text-slate-500 mt-1.5 tracking-widest uppercase">Human Interventions</p>
+          </div>
+        </div>
+      </div>
+
       {/* ── Key Features ──────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-6 py-16 w-full relative z-10">
         <div className="text-center mb-12">
@@ -186,6 +232,7 @@ export default function LandingPage() {
       {/* ── Interactive Simulator ──────────────────────────────── */}
       <section
         id="demo-simulator"
+        ref={simulatorRef as RefObject<HTMLElement>}
         className="max-w-5xl mx-auto px-6 py-16 w-full relative z-10"
       >
         <div className="text-center mb-8">
@@ -264,6 +311,18 @@ export default function LandingPage() {
               )}
             </div>
 
+            {/* Step Progress */}
+            <div className="flex gap-2 justify-center mb-4">
+              {[1, 2, 3, 4].map((step) => (
+                <div
+                  key={step}
+                  className={`h-1 rounded-full transition-all duration-500 ${
+                    simulationStep >= step ? 'w-8 bg-cyan-400' : 'w-4 bg-slate-700'
+                  }`}
+                />
+              ))}
+            </div>
+
             {/* Bottom Actions */}
             <div className="flex justify-between items-center border-t border-white/5 pt-3 mt-auto">
               <button
@@ -338,12 +397,43 @@ export default function LandingPage() {
             <h3 className="text-3xl font-bold mt-2 leading-tight">
               Driven by Gemini 3 Semantic Intelligence
             </h3>
-            <p className="mt-4 text-slate-400 leading-relaxed text-sm">
-              Standard data pipeline integrations break because they rely on exact match mappings. When a field changes name, the entire ingest process blocks.
-            </p>
-            <p className="mt-4 text-slate-400 leading-relaxed text-sm">
-              Suture avoids brittle mappings. By leveraging the fast reasoning capabilities of Gemini 3 Pro, the agent maps rename mutations semantically, checking structural contexts to verify types and safety margins before applying patches.
-            </p>
+            <div className="mt-6 space-y-2.5">
+              <div className="flex items-start gap-3 p-3 rounded-lg border border-red-500/30 bg-red-500/5">
+                <span className="font-heading text-[10px] text-red-400 shrink-0 mt-0.5 opacity-70">01</span>
+                <div>
+                  <span className="font-heading text-xs text-red-400">DETECT</span>
+                  <p className="text-[11px] text-slate-500 mt-0.5">Fivetran webhook received in &lt;10ms, incident opened</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg border border-amber-500/30 bg-amber-500/5">
+                <span className="font-heading text-[10px] text-amber-400 shrink-0 mt-0.5 opacity-70">02</span>
+                <div>
+                  <span className="font-heading text-xs text-amber-400">DIAGNOSE</span>
+                  <p className="text-[11px] text-slate-500 mt-0.5">Source vs destination schemas diffed via Fivetran API</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg border border-purple-500/30 bg-purple-500/5">
+                <span className="font-heading text-[10px] text-purple-400 shrink-0 mt-0.5 opacity-70">03</span>
+                <div>
+                  <span className="font-heading text-xs text-purple-400">MAP</span>
+                  <p className="text-[11px] text-slate-500 mt-0.5">Gemini 3 Pro reasons column renames semantically</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg border border-cyan-500/30 bg-cyan-500/5">
+                <span className="font-heading text-[10px] text-cyan-400 shrink-0 mt-0.5 opacity-70">04</span>
+                <div>
+                  <span className="font-heading text-xs text-cyan-400">PATCH</span>
+                  <p className="text-[11px] text-slate-500 mt-0.5">PATCH /connectors/{'{id}'}/schemas applied autonomously</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 rounded-lg border border-green-500/30 bg-green-500/5">
+                <span className="font-heading text-[10px] text-green-400 shrink-0 mt-0.5 opacity-70">05</span>
+                <div>
+                  <span className="font-heading text-xs text-green-400">VERIFY</span>
+                  <p className="text-[11px] text-slate-500 mt-0.5">Force re-sync, poll until HEALTHY confirmed</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="lg:col-span-7 border border-white/5 bg-slate-900/30 rounded-2xl p-6 relative">
