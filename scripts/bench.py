@@ -2,7 +2,7 @@
 """
 Suture — Benchmark Script
 
-Measures the latency of the SchemaMedic agent.
+Measures the latency of the Suture agent.
 Usage: python scripts/bench.py
 """
 
@@ -18,7 +18,7 @@ async def simulate_phase(min_ms: int, max_ms: int) -> int:
     return latency
 
 async def run_benchmark(runs: int = 20):
-    print(f"SchemaMedic Performance Benchmark ({runs} runs)")
+    print(f"Suture Performance Benchmark ({runs} runs)")
     print("=" * 42)
     
     detection_times = []
