@@ -29,7 +29,7 @@ Autonomous Fivetran schema drift healer. Detects broken syncs caused by schema d
 |---|---|
 | **Agent Runtime** | Python 3.12, FastAPI |
 | **AI Model** | Gemini 3 Pro (Vertex AI) |
-| **Data Integration** | Fivetran MCP Server + REST API (7 methods) |
+| **Data Integration** | Fivetran REST API (7 methods) |
 | **Observability** | Arize Phoenix (OpenInference) |
 | **Frontend** | Next.js 16 (App Router), React 19 |
 | **Styling** | Tailwind CSS v4 |

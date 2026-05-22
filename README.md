@@ -6,7 +6,9 @@
   <br/>
 
   [![Live Demo](https://img.shields.io/badge/🚀_Live-Demo-06b6d4?style=for-the-badge)](https://suture.edycu.dev)
-  [![Built for Google Cloud Rapid Agent](https://img.shields.io/badge/Devpost-Google_Cloud_Rapid_Agent-8b5cf6?style=for-the-badge)](https://devpost.com)
+  [![Pitch Deck](https://img.shields.io/badge/📊_Pitch-Deck-f59e0b?style=for-the-badge)](https://suture.edycu.dev/pitch-deck)
+  [![YouTube Demo](https://img.shields.io/badge/▶_YouTube-Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/suture-demo)
+  [![Built for Google Cloud Rapid Agent](https://img.shields.io/badge/Devpost-Google_Cloud_Rapid_Agent-8b5cf6?style=for-the-badge)](https://rapid-agent.devpost.com/)
 
   <br/>
 
@@ -25,7 +27,7 @@
 ## 📸 See it in Action
 
 <div align="center">
-  <img src="docs/readme.png" alt="Suture Demo" width="100%">
+  <img src="public/og-image" alt="Suture Demo" width="100%">
 </div>
 
 > **Self-healing infrastructure in action.** Schema Break → Webhook → Log Analysis → Schema Diff → AI Reasoning → API Patch → Re-Sync → ✅ GREEN.
@@ -140,7 +142,7 @@ suture/
 ```
 
 ## 📄 License
-[MIT](LICENSE) © 2026 Edy Cu Tjong
+[MIT](LICENSE) © 2026 Edy Cu
 
 ## 🙏 Acknowledgments
 Built for Google Cloud Rapid Agent Hackathon 2026. Thank you to Fivetran and Google Cloud for the APIs and tools.
