@@ -18,13 +18,12 @@ describe('PipelineCard', () => {
   };
 
   it('renders pipeline metadata correctly', () => {
-    render(<PipelineCard pipeline={mockPipeline} />);
+    const { container } = render(<PipelineCard pipeline={mockPipeline} />);
 
     expect(screen.getByText('Salesforce Sync')).toBeInTheDocument();
     expect(screen.getByText('salesforce_connector_id')).toBeInTheDocument();
     expect(screen.getByText('HEALTHY')).toBeInTheDocument();
-    expect(screen.getByText('☁️')).toBeInTheDocument();
-    expect(screen.getByText('📊')).toBeInTheDocument();
+    expect(container.querySelectorAll('svg').length).toBe(2);
   });
 
   it('renders correct sync time when last_sync_at is provided', () => {
@@ -58,8 +57,7 @@ describe('PipelineCard', () => {
       source_type: 'unknown_source',
       destination_type: 'unknown_dest',
     };
-    render(<PipelineCard pipeline={unknownPipeline} />);
-    expect(screen.getByText('📦')).toBeInTheDocument();
-    expect(screen.getByText('🗄️')).toBeInTheDocument();
+    const { container } = render(<PipelineCard pipeline={unknownPipeline} />);
+    expect(container.querySelectorAll('svg').length).toBe(2);
   });
 });

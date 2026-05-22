@@ -7,7 +7,7 @@ import type { Incident, IncidentStatus } from '@/lib/types';
 describe('IncidentTimeline', () => {
   it('renders empty message when no incidents are present', () => {
     render(<IncidentTimeline incidents={[]} />);
-    expect(screen.getByText('No incidents yet — all pipelines healthy 🟢')).toBeInTheDocument();
+    expect(screen.getByText('No incidents yet — all pipelines healthy')).toBeInTheDocument();
   });
 
   it('renders resolved, failed, and pending incidents with correct status icons', () => {
@@ -36,7 +36,7 @@ describe('IncidentTimeline', () => {
         id: 'inc-3',
         pipeline_id: 'pipe-3',
         error_type: 'rate_limit',
-        status: 'detecting' as IncidentStatus, // fallback to 🔄
+        status: 'detecting' as IncidentStatus,
         created_at: '2026-05-22T10:10:00Z',
       },
     ];
@@ -44,9 +44,9 @@ describe('IncidentTimeline', () => {
     render(<IncidentTimeline incidents={mockIncidents} />);
 
     // Check status icons
-    expect(screen.getByText('✅')).toBeInTheDocument();
-    expect(screen.getByText('❌')).toBeInTheDocument();
-    expect(screen.getByText('🔄')).toBeInTheDocument();
+    expect(screen.getByTestId('status-icon-resolved')).toBeInTheDocument();
+    expect(screen.getByTestId('status-icon-failed')).toBeInTheDocument();
+    expect(screen.getByTestId('status-icon-detecting')).toBeInTheDocument();
 
     // Check IDs
     expect(screen.getByText('inc-1')).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe('IncidentTimeline', () => {
     expect(screen.getByText('Fixed column datatype from VARCHAR to INTEGER.')).toBeInTheDocument();
 
     // Check resolution time
-    expect(screen.getByText('⚡ 5000ms')).toBeInTheDocument();
+    expect(screen.getByText('5000ms')).toBeInTheDocument();
 
     // Check confidence score
     expect(screen.getByText('95%')).toBeInTheDocument();
@@ -82,7 +82,7 @@ describe('IncidentTimeline', () => {
     render(<IncidentTimeline incidents={minimalisticIncident} />);
     expect(screen.getByText('inc-minimal')).toBeInTheDocument();
     expect(screen.queryByText('GEMINI 3 REASONING')).not.toBeInTheDocument();
-    expect(screen.queryByText(/⚡/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/ms/)).not.toBeInTheDocument();
     expect(screen.queryByText(/Confidence/)).not.toBeInTheDocument();
   });
 });

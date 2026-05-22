@@ -6,6 +6,7 @@
 
 import type { Incident } from '@/lib/types';
 import { StatusBadge } from './StatusBadge';
+import { CheckCircle2, XCircle, RefreshCw, Bot, Zap, ShieldCheck } from 'lucide-react';
 
 interface IncidentTimelineProps {
   incidents: Incident[];
@@ -15,8 +16,9 @@ export function IncidentTimeline({ incidents }: IncidentTimelineProps) {
   if (incidents.length === 0) {
     return (
       <div className="glass-card p-8 text-center">
-        <p className="text-[var(--text-muted)] text-sm">
-          No incidents yet — all pipelines healthy 🟢
+        <p className="text-[var(--text-muted)] text-sm flex items-center justify-center gap-2">
+          <ShieldCheck className="w-4 h-4 text-green-400" />
+          No incidents yet — all pipelines healthy
         </p>
       </div>
     );
@@ -33,8 +35,14 @@ export function IncidentTimeline({ incidents }: IncidentTimelineProps) {
           {/* Header */}
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <span className="text-sm">
-                {incident.status === 'resolved' ? '✅' : incident.status === 'failed' ? '❌' : '🔄'}
+              <span data-testid={`status-icon-${incident.status}`}>
+                {incident.status === 'resolved' ? (
+                  <CheckCircle2 className="w-4 h-4 text-green-400" />
+                ) : incident.status === 'failed' ? (
+                  <XCircle className="w-4 h-4 text-red-400" />
+                ) : (
+                  <RefreshCw className={`w-4 h-4 text-amber-400 ${incident.status === 'patching' || incident.status === 'diagnosing' ? 'animate-spin' : ''}`} />
+                )}
               </span>
               <span className="font-mono text-xs text-[var(--text-muted)]">
                 {incident.id}
@@ -54,7 +62,7 @@ export function IncidentTimeline({ incidents }: IncidentTimelineProps) {
           {incident.ai_reasoning && (
             <div className="bg-purple-500/5 border border-purple-500/20 rounded-lg p-3 mb-2">
               <div className="flex items-center gap-1.5 mb-1">
-                <span className="text-xs">🤖</span>
+                <Bot className="w-3.5 h-3.5 text-purple-400" />
                 <span className="text-[10px] font-heading text-purple-400 tracking-wider">
                   GEMINI 3 REASONING
                 </span>
@@ -71,8 +79,9 @@ export function IncidentTimeline({ incidents }: IncidentTimelineProps) {
               {new Date(incident.created_at).toLocaleString()}
             </span>
             {incident.resolution_time_ms && (
-              <span className="font-mono text-xs text-[var(--accent-healthy)]">
-                ⚡ {incident.resolution_time_ms}ms
+              <span className="font-mono text-xs text-[var(--accent-healthy)] flex items-center gap-1">
+                <Zap className="w-3.5 h-3.5" />
+                <span>{incident.resolution_time_ms}ms</span>
               </span>
             )}
           </div>

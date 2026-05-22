@@ -18,8 +18,8 @@ describe('DemoControls', () => {
     render(<DemoControls onSeed={onSeed} onBreak={onBreak} onHeal={onHeal} />);
 
     expect(screen.getByRole('button', { name: 'SEED' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '💥 BREAK' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '🩹 HEAL' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'BREAK' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'HEAL' })).toBeInTheDocument();
   });
 
   it('triggers onSeed and handles loading state', async () => {
@@ -31,8 +31,8 @@ describe('DemoControls', () => {
 
     render(<DemoControls onSeed={onSeed} onBreak={onBreak} onHeal={onHeal} />);
     const seedBtn = screen.getByRole('button', { name: 'SEED' });
-    const breakBtn = screen.getByRole('button', { name: '💥 BREAK' });
-    const healBtn = screen.getByRole('button', { name: '🩹 HEAL' });
+    const breakBtn = screen.getByRole('button', { name: 'BREAK' });
+    const healBtn = screen.getByRole('button', { name: 'HEAL' });
 
     // Click seed
     fireEvent.click(seedBtn);
@@ -65,7 +65,7 @@ describe('DemoControls', () => {
     onBreak.mockReturnValueOnce(promise);
 
     render(<DemoControls onSeed={onSeed} onBreak={onBreak} onHeal={onHeal} />);
-    const breakBtn = screen.getByRole('button', { name: '💥 BREAK' });
+    const breakBtn = screen.getByRole('button', { name: 'BREAK' });
 
     fireEvent.click(breakBtn);
     expect(breakBtn).toHaveTextContent('...');
@@ -75,7 +75,7 @@ describe('DemoControls', () => {
       resolvePromise();
       await promise;
     });
-    expect(breakBtn).toHaveTextContent('💥 BREAK');
+    expect(breakBtn).toHaveTextContent('BREAK');
   });
 
   it('triggers onHeal and handles loading state', async () => {
@@ -86,7 +86,7 @@ describe('DemoControls', () => {
     onHeal.mockReturnValueOnce(promise);
 
     render(<DemoControls onSeed={onSeed} onBreak={onBreak} onHeal={onHeal} />);
-    const healBtn = screen.getByRole('button', { name: '🩹 HEAL' });
+    const healBtn = screen.getByRole('button', { name: 'HEAL' });
 
     fireEvent.click(healBtn);
     expect(healBtn).toHaveTextContent('...');
@@ -96,6 +96,6 @@ describe('DemoControls', () => {
       resolvePromise();
       await promise;
     });
-    expect(healBtn).toHaveTextContent('🩹 HEAL');
+    expect(healBtn).toHaveTextContent('HEAL');
   });
 });

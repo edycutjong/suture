@@ -113,7 +113,7 @@ export const MOCK_LOG_ENTRIES: LogEntry[] = [
   { timestamp: '2026-05-14T03:00:11', level: 'success', message: 'AI mapping: annual_revenue → revenue (0.94 confidence)' },
   { timestamp: '2026-05-14T03:00:12', level: 'info', message: 'Patching Fivetran connector schema...' },
   { timestamp: '2026-05-14T03:00:13', level: 'info', message: 'Triggering re-sync...' },
-  { timestamp: '2026-05-14T03:00:14', level: 'success', message: '✅ Pipeline HEALED — resolved in 1.8s' },
+  { timestamp: '2026-05-14T03:00:14', level: 'success', message: 'Pipeline HEALED — resolved in 1.8s' },
 ];
 
 export const MOCK_STATS: Stats = {

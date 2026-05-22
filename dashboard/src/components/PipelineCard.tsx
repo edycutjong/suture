@@ -6,25 +6,28 @@
 
 import type { Pipeline } from '@/lib/types';
 import { StatusBadge } from './StatusBadge';
+import { Cloud, CircleDot, CreditCard, MessageSquare, Database, Snowflake, Box } from 'lucide-react';
 
 interface PipelineCardProps {
   pipeline: Pipeline;
 }
 
-const SOURCE_ICONS: Record<string, string> = {
-  salesforce: '☁️',
-  hubspot: '🟠',
-  stripe: '💳',
-  zendesk: '💬',
+const SOURCE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  salesforce: Cloud,
+  hubspot: CircleDot,
+  stripe: CreditCard,
+  zendesk: MessageSquare,
 };
 
-const DEST_ICONS: Record<string, string> = {
-  bigquery: '📊',
-  snowflake: '❄️',
+const DEST_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  bigquery: Database,
+  snowflake: Snowflake,
 };
 
 export function PipelineCard({ pipeline }: PipelineCardProps) {
   const isActive = pipeline.status === 'healing' || pipeline.status === 'broken';
+  const SourceIcon = SOURCE_ICONS[pipeline.source_type] ?? Box;
+  const DestIcon = DEST_ICONS[pipeline.destination_type] ?? Database;
 
   return (
     <div
@@ -35,12 +38,12 @@ export function PipelineCard({ pipeline }: PipelineCardProps) {
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2">
-          <span className="text-xl">
-            {SOURCE_ICONS[pipeline.source_type] ?? '📦'}
+          <span className="text-xl text-[var(--text-secondary)]">
+            <SourceIcon className="w-5 h-5" />
           </span>
           <span className="text-sm text-[var(--text-muted)]">→</span>
-          <span className="text-xl">
-            {DEST_ICONS[pipeline.destination_type] ?? '🗄️'}
+          <span className="text-xl text-[var(--text-secondary)]">
+            <DestIcon className="w-5 h-5" />
           </span>
         </div>
         <StatusBadge status={pipeline.status} animate={isActive} />

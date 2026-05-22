@@ -1,4 +1,4 @@
-.PHONY: test test-be test-fe test-be-coverage test-fe-coverage coverage test-coverage
+.PHONY: test test-be test-fe test-be-coverage test-fe-coverage coverage test-coverage ci ci-be ci-fe ci-agent ci-dashboard
 
 # Run all tests (backend + frontend)
 test: test-be test-fe
@@ -24,3 +24,18 @@ test-be-coverage:
 # Frontend with coverage report
 test-fe-coverage:
 	cd dashboard && npm run test:coverage
+
+# Run CI checks (linting, typechecking, tests, and build) for both agent and dashboard
+ci: ci-be ci-fe
+
+ci-be: ci-agent
+ci-agent:
+	cd agent && .venv/bin/ruff check .
+	cd agent && .venv/bin/mypy .
+	$(MAKE) test-be-coverage
+
+ci-fe: ci-dashboard
+ci-dashboard:
+	cd dashboard && npm run ci
+	cd dashboard && npm run build
+

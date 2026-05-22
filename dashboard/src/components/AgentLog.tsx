@@ -5,6 +5,7 @@
  */
 
 import type { LogEntry } from '@/lib/types';
+import { Info, AlertTriangle, XCircle, CheckCircle2 } from 'lucide-react';
 
 interface AgentLogProps {
   entries: LogEntry[];
@@ -24,6 +25,13 @@ const LEVEL_PREFIXES: Record<string, string> = {
   success: 'OK ',
 };
 
+const LEVEL_ICONS: Record<LogEntry['level'], React.ComponentType<{ className?: string }>> = {
+  info: Info,
+  warning: AlertTriangle,
+  error: XCircle,
+  success: CheckCircle2,
+};
+
 export function AgentLog({ entries }: AgentLogProps) {
   return (
     <div className="glass-card overflow-hidden">
@@ -41,25 +49,31 @@ export function AgentLog({ entries }: AgentLogProps) {
       </div>
 
       {/* Log entries */}
-      <div className="terminal-log p-3 border-0 rounded-none">
-        {entries.map((entry, idx) => (
-          <div
-            key={idx}
-            className="flex gap-2 animate-slide-right"
-            style={{ animationDelay: `${idx * 50}ms` }}
-          >
-            <span className="log-timestamp shrink-0">
-              {entry.timestamp.split('T')[1]?.substring(0, 8) ?? ''}
-            </span>
-            <span className={`${LEVEL_CLASSES[entry.level]} shrink-0`}>
-              [{LEVEL_PREFIXES[entry.level]}]
-            </span>
-            <span className="text-[var(--text-secondary)]">
-              {entry.message}
-            </span>
-          </div>
-        ))}
+      <div className="terminal-log p-3 border-0 rounded-none space-y-1">
+        {entries.map((entry, idx) => {
+          const Icon = LEVEL_ICONS[entry.level];
+          const cleanMessage = entry.message.replace(/^✅\s*/, '');
+          return (
+            <div
+              key={idx}
+              className="flex gap-2 items-start animate-slide-right"
+              style={{ animationDelay: `${idx * 50}ms` }}
+            >
+              <span className="log-timestamp shrink-0 mt-0.5">
+                {entry.timestamp.split('T')[1]?.substring(0, 8) ?? ''}
+              </span>
+              <span className={`${LEVEL_CLASSES[entry.level]} shrink-0 flex items-center gap-1`}>
+                <Icon className="w-3.5 h-3.5 shrink-0" />
+                <span>[{LEVEL_PREFIXES[entry.level]}]</span>
+              </span>
+              <span className="text-[var(--text-secondary)]">
+                {cleanMessage}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
+

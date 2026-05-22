@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Dashboard from '@/app/page';
+import Dashboard from '@/app/dashboard/page';
 import {
   fetchIncidents,
   fetchPipelines,
@@ -167,7 +167,7 @@ describe('Dashboard Page', () => {
       jest.advanceTimersByTime(0);
     });
 
-    const breakBtn = screen.getByRole('button', { name: '💥 BREAK' });
+    const breakBtn = screen.getByRole('button', { name: 'BREAK' });
 
     await act(async () => {
       fireEvent.click(breakBtn);
@@ -184,7 +184,7 @@ describe('Dashboard Page', () => {
       jest.advanceTimersByTime(0);
     });
 
-    const healBtn = screen.getByRole('button', { name: '🩹 HEAL' });
+    const healBtn = screen.getByRole('button', { name: 'HEAL' });
 
     await act(async () => {
       fireEvent.click(healBtn);
@@ -211,7 +211,7 @@ describe('Dashboard Page', () => {
       jest.advanceTimersByTime(0);
     });
 
-    const healBtn = screen.getByRole('button', { name: '🩹 HEAL' });
+    const healBtn = screen.getByRole('button', { name: 'HEAL' });
 
     await act(async () => {
       fireEvent.click(healBtn);
@@ -229,7 +229,7 @@ describe('Dashboard Page', () => {
       jest.advanceTimersByTime(0);
     });
 
-    const healBtn = screen.getByRole('button', { name: '🩹 HEAL' });
+    const healBtn = screen.getByRole('button', { name: 'HEAL' });
 
     await act(async () => {
       fireEvent.click(healBtn);
@@ -254,7 +254,7 @@ describe('Dashboard Page', () => {
       jest.advanceTimersByTime(0);
     });
 
-    expect(screen.getByText('No schema drift detected — all schemas in sync ✅')).toBeInTheDocument();
+    expect(screen.getByText('No schema drift detected — all schemas in sync')).toBeInTheDocument();
   });
 
   it('derives fallback logs when incidents is empty', async () => {
@@ -295,7 +295,7 @@ describe('Dashboard Page', () => {
 
     expect(screen.getAllByText('Sync failure detail message')[0]).toBeInTheDocument();
     expect(screen.getByText(/Gemini 3: Autoresolved by Suture/)).toBeInTheDocument();
-    expect(screen.getByText(/✅ Pipeline HEALED — resolved in 5000ms/)).toBeInTheDocument();
+    expect(screen.getByText(/Pipeline HEALED — resolved in 5000ms/)).toBeInTheDocument();
   });
 
   it('uses default fallback error message if inc.error_message is null/undefined', async () => {
@@ -370,7 +370,7 @@ describe('Dashboard Page', () => {
       jest.advanceTimersByTime(0);
     });
 
-    expect(screen.getByText('No schema drift detected — all schemas in sync ✅')).toBeInTheDocument();
+    expect(screen.getByText('No schema drift detected — all schemas in sync')).toBeInTheDocument();
   });
 
   it('renders empty schema drift message if destination_schema is present but source_schema is missing', async () => {
@@ -392,6 +392,6 @@ describe('Dashboard Page', () => {
       jest.advanceTimersByTime(0);
     });
 
-    expect(screen.getByText('No schema drift detected — all schemas in sync ✅')).toBeInTheDocument();
+    expect(screen.getByText('No schema drift detected — all schemas in sync')).toBeInTheDocument();
   });
 });
