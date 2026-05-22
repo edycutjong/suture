@@ -117,7 +117,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/dashboard"
-              className="px-4 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-heading hover:bg-cyan-500/20 transition-all flex items-center gap-1.5"
+              className="px-4 py-1.5 rounded-lg btn-cyber-outline-animated text-xs font-heading flex items-center gap-1.5"
             >
               Launch Console <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -143,7 +143,7 @@ export default function LandingPage() {
         <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
           <Link
             href="/dashboard"
-            className="w-full sm:w-auto px-8 py-3 rounded-xl bg-cyan-500 text-slate-950 font-heading text-sm font-bold shadow-lg shadow-cyan-500/25 hover:bg-cyan-400 hover:shadow-cyan-400/35 transform hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group"
+            className="w-full sm:w-auto px-8 py-3 rounded-xl btn-cyber-animated font-heading text-sm font-bold flex items-center justify-center gap-2 group"
           >
             Launch Command Center
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -525,9 +525,10 @@ export default function LandingPage() {
         </p>
         <Link
           href="/dashboard"
-          className="px-8 py-3.5 rounded-xl bg-cyan-500 text-slate-950 font-heading text-sm font-bold shadow-lg shadow-cyan-500/20 hover:bg-cyan-400 hover:shadow-cyan-400/30 transition-all inline-flex items-center gap-2"
+          className="mx-auto w-full sm:w-auto px-8 py-3 rounded-xl btn-cyber-animated font-heading text-sm font-bold flex items-center justify-center gap-2 group"
         >
-          Open Command Console <ArrowRight className="w-4 h-4" />
+          Open Command Console
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </Link>
       </section>
 

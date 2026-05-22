@@ -212,17 +212,17 @@ describe('Landing Page', () => {
   });
 
   it('handles case where simulator ref is not set', () => {
-    const useRefSpy = jest.spyOn(React, 'useRef').mockImplementation((initialValue) => {
+    const useRefSpy = jest.spyOn(React, 'useRef').mockImplementation((initialValue: unknown) => {
       if (initialValue === null) {
-        const refObj = {};
+        const refObj = { current: null };
         Object.defineProperty(refObj, 'current', {
           get: () => null,
           set: () => {},
           configurable: true,
         });
-        return refObj;
+        return refObj as unknown as React.MutableRefObject<unknown>;
       }
-      return { current: initialValue };
+      return { current: initialValue } as unknown as React.MutableRefObject<unknown>;
     });
 
     render(<LandingPage />);
