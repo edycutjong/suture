@@ -27,7 +27,7 @@
 ## 📸 See it in Action
 
 <div align="center">
-  <img src="public/og-image" alt="Suture Demo" width="100%">
+  <img src="dashboard/public/og-image.png" alt="Suture Demo" width="100%">
 </div>
 
 > **Self-healing infrastructure in action.** Schema Break → Webhook → Log Analysis → Schema Diff → AI Reasoning → API Patch → Re-Sync → ✅ GREEN.
