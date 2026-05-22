@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  agent:
+    build:
+      context: ./agent
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./agent:/app
+      # Exclude local venv and caches from mounting into the container
+      - /app/.venv
+      - /app/__pycache__
+    env_file:
+      - ./agent/.env
+    environment:
+      - PORT=8000
+
+  dashboard:
+    image: node:20-slim
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./dashboard:/app
+      # Exclude local node_modules and next builds from mounting
+      - /app/node_modules
+      - /app/.next
+    env_file:
+      - ./dashboard/.env.local
+    command: sh -c "npm install && npm run dev"

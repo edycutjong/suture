@@ -37,9 +37,10 @@ describe('RootLayout', () => {
   });
 
   it('exports correct metadata configuration', () => {
-    expect(metadata.title).toBe('Suture — Your pipelines heal themselves');
+    expect((metadata.title as { default: string }).default).toBe('Suture — Your pipelines heal themselves');
+    expect((metadata.title as { template: string }).template).toBe('%s | Suture');
     expect(metadata.description).toBe(
-      'Autonomous AI agent that detects broken Fivetran syncs caused by schema drift and self-heals the pipeline.',
+      'Autonomous AI agent that detects broken Fivetran syncs caused by schema drift and self-heals in under 60 seconds.',
     );
     expect(metadata.openGraph?.title).toBe('Suture — Your pipelines heal themselves');
     expect((metadata.twitter as { card?: string })?.card).toBe('summary_large_image');

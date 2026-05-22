@@ -39,3 +39,12 @@ ci-dashboard:
 	cd dashboard && npm run ci
 	cd dashboard && npm run build
 
+# Run both backend and frontend development servers in parallel
+dev:
+	@echo "Starting backend agent (port 8000) and frontend dashboard (port 3000)..."
+	@npx -y concurrently \
+		--names "AGENT,DASHBOARD" \
+		--prefix-colors "cyan,magenta" \
+		--kill-others \
+		"cd agent && .venv/bin/uvicorn main:app --reload --port 8000" \
+		"cd dashboard && npm run dev"

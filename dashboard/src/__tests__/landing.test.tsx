@@ -19,6 +19,13 @@ describe('Landing Page', () => {
     jest.useFakeTimers();
     scrollIntoViewMock = jest.fn();
     window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
+    
+    // Mock IntersectionObserver
+    window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+      observe: () => null,
+      unobserve: () => null,
+      disconnect: () => null,
+    }));
   });
 
   afterEach(() => {
@@ -140,6 +147,43 @@ describe('Landing Page', () => {
     expect(screen.getByText('Schema Drift Detected!')).toBeInTheDocument();
   });
 
+  it('auto-starts simulation when intersecting and covers observer branches', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let intersectCallback: any = null;
+    window.IntersectionObserver = jest.fn().mockImplementation((cb) => {
+      intersectCallback = cb;
+      return {
+        observe: () => null,
+        unobserve: () => null,
+        disconnect: () => null,
+      };
+    });
+
+    render(<LandingPage />);
+    
+    // 1. Call with non-intersecting entry to test the false branch
+    act(() => {
+      intersectCallback([{ isIntersecting: false }]);
+    });
+    expect(screen.queryByText('Schema Drift Detected!')).not.toBeInTheDocument();
+
+    // 2. Call with intersecting entry to trigger simulation
+    act(() => {
+      intersectCallback([{ isIntersecting: true }]);
+    });
+    expect(screen.getByText('Schema Drift Detected!')).toBeInTheDocument();
+
+    // Advance timers to trigger observer setTimeouts
+    act(() => {
+      jest.advanceTimersByTime(7500);
+    });
+
+    // 3. Call again when already auto-started to cover the hasAutoStarted branch
+    act(() => {
+      intersectCallback([{ isIntersecting: true }]);
+    });
+  });
+
   it('handles smooth scroll when element is missing', () => {
     render(<LandingPage />);
     const watchDemoBtn = screen.getByRole('button', { name: 'Watch Demo' });
@@ -152,6 +196,38 @@ describe('Landing Page', () => {
     expect(scrollIntoViewMock).not.toHaveBeenCalled();
     
     document.getElementById = originalGetElementById;
+  });
+
+  it('unmounts and disconnects the observer', () => {
+    const disconnectMock = jest.fn();
+    window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+      observe: () => null,
+      unobserve: () => null,
+      disconnect: disconnectMock,
+    }));
+
+    const { unmount } = render(<LandingPage />);
+    unmount();
+    expect(disconnectMock).toHaveBeenCalled();
+  });
+
+  it('handles case where simulator ref is not set', () => {
+    const useRefSpy = jest.spyOn(React, 'useRef').mockImplementation((initialValue) => {
+      if (initialValue === null) {
+        const refObj = {};
+        Object.defineProperty(refObj, 'current', {
+          get: () => null,
+          set: () => {},
+          configurable: true,
+        });
+        return refObj;
+      }
+      return { current: initialValue };
+    });
+
+    render(<LandingPage />);
+    // Restore original useRef
+    useRefSpy.mockRestore();
   });
 });
 

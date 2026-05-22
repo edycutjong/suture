@@ -74,7 +74,6 @@ export default function LandingPage() {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -106,10 +105,16 @@ export default function LandingPage() {
               href="https://github.com/edycutjong/suture"
               target="_blank"
               rel="noreferrer"
-              className="text-xs text-slate-400 hover:text-cyan-400 transition-colors"
+              className="text-xs text-slate-400 hover:text-cyan-400 transition-colors hidden sm:block"
             >
               GitHub
             </a>
+            <Link
+              href="/pitch"
+              className="text-xs text-slate-400 hover:text-purple-400 transition-colors hidden sm:block"
+            >
+              Pitch Deck
+            </Link>
             <Link
               href="/dashboard"
               className="px-4 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-heading hover:bg-cyan-500/20 transition-all flex items-center gap-1.5"
@@ -473,13 +478,8 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {/* Google Cloud */}
             <div className="glass-card p-5 flex items-center gap-4 border border-white/5 bg-slate-900/20 backdrop-blur-md rounded-xl hover:border-cyan-500/30 hover:bg-slate-900/40 transition-all group">
-              <div className="p-2.5 rounded-lg bg-red-500/10 border border-red-500/20 group-hover:bg-red-500/20 transition-all flex items-center justify-center">
-                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2.5L4 7.12v9.25l8 4.63 8-4.63V7.12L12 2.5z" fill="#4285F4" />
-                  <path d="M12 11.5L4 7.12l8-4.62 8 4.62-8 4.38z" fill="#EA4335" />
-                  <path d="M4 16.37V7.12L12 11.5v9.25L4 16.37z" fill="#34A853" />
-                  <path d="M12 11.5l8-4.38v9.25l-8 4.63v-9.5z" fill="#FBBC05" />
-                </svg>
+              <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 group-hover:bg-white/10 transition-all flex items-center justify-center w-12 h-12 shrink-0">
+                <img src="/icon-google-cloud.svg" alt="Google Cloud" className="w-8 h-8 object-contain" />
               </div>
               <div>
                 <h4 className="font-heading text-xs text-white tracking-wider">Google Cloud</h4>
@@ -489,11 +489,8 @@ export default function LandingPage() {
 
             {/* Fivetran */}
             <div className="glass-card p-5 flex items-center gap-4 border border-white/5 bg-slate-900/20 backdrop-blur-md rounded-xl hover:border-cyan-500/30 hover:bg-slate-900/40 transition-all group">
-              <div className="p-2.5 rounded-lg bg-orange-500/10 border border-orange-500/20 group-hover:bg-orange-500/20 transition-all flex items-center justify-center">
-                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 4h16v4H8v4h10v4H8v4h10v4H4V4z" fill="#FF5C35" />
-                  <circle cx="16" cy="16" r="3" fill="#06B6D4" />
-                </svg>
+              <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 group-hover:bg-white/10 transition-all flex items-center justify-center w-12 h-12 shrink-0">
+                <img src="/icon-fivetran.svg" alt="Fivetran" className="w-8 h-8 object-contain" />
               </div>
               <div>
                 <h4 className="font-heading text-xs text-white tracking-wider">Fivetran</h4>
@@ -503,12 +500,8 @@ export default function LandingPage() {
 
             {/* Arize Phoenix */}
             <div className="glass-card p-5 flex items-center gap-4 border border-white/5 bg-slate-900/20 backdrop-blur-md rounded-xl hover:border-cyan-500/30 hover:bg-slate-900/40 transition-all group">
-              <div className="p-2.5 rounded-lg bg-pink-500/10 border border-pink-500/20 group-hover:bg-pink-500/20 transition-all flex items-center justify-center">
-                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L9 8h6l-3-6z" fill="#FB7185" />
-                  <path d="M6 10l5 10v-8L6 10z" fill="#E11D48" />
-                  <path d="M18 10l-5 10v-8l5-10z" fill="#BE123C" />
-                </svg>
+              <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 group-hover:bg-white/10 transition-all flex items-center justify-center w-12 h-12 shrink-0">
+                <img src="/icon-arize-phoenix.svg" alt="Arize Phoenix" className="w-8 h-8 object-contain" />
               </div>
               <div>
                 <h4 className="font-heading text-xs text-white tracking-wider">Arize Phoenix</h4>
