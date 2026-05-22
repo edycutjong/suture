@@ -1,7 +1,6 @@
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 from clients.fivetran import FivetranClient
-import httpx
 
 @pytest.fixture
 def live_client():
@@ -18,7 +17,7 @@ class AsyncMockContext:
 @pytest.fixture
 def httpx_mock():
     mock_client = AsyncMock()
-    with patch('httpx.AsyncClient', return_value=AsyncMockContext(mock_client)) as mock:
+    with patch('httpx.AsyncClient', return_value=AsyncMockContext(mock_client)):
         yield mock_client
 
 @pytest.mark.asyncio

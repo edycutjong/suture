@@ -7,7 +7,6 @@ Exposes webhook listener, REST API, and health checks.
 
 from __future__ import annotations
 
-import os
 import time
 
 from dotenv import load_dotenv

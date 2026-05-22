@@ -1,15 +1,12 @@
 """Tests for the main FastAPI agent application endpoints."""
 
 import pytest
-import time
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, patch
 from fastapi.testclient import TestClient
 
 import main
 from models.schemas import (
     ColumnMapping,
-    FivetranWebhookEvent,
-    Pipeline,
     PipelineStatus,
     SchemaDiff,
 )

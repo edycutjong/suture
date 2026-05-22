@@ -1,7 +1,7 @@
 import pytest
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, MagicMock
 from core.verifier import Verifier
-from models.schemas import PipelineStatus, IncidentStatus
+from models.schemas import PipelineStatus
 
 @pytest.fixture
 def fivetran_mock():
