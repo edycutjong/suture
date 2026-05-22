@@ -13,14 +13,6 @@ def make_schema(table: str, col_names: list[str]) -> TableSchema:
     )
 
 
-def make_diff(missing=None, new=None, matched=None):
-    return SchemaDiff(
-        missing_columns=missing or [],
-        new_columns=new or [],
-        matched_columns=matched or [],
-    )
-
-
 class TestDiagnose:
     @pytest.fixture
     def mock_deps(self):
