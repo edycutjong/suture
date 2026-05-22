@@ -127,10 +127,15 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
             <img src="/icon.svg" alt="Suture Logo" className="w-8 h-8 transition-transform group-hover:scale-105" />
-            <div className="flex items-center gap-2">
-              <span className="font-heading text-lg tracking-widest text-(--text-primary)">SUTURE</span>
-              <span className="text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono">
-                v1.0.0
+            <div className="flex flex-col justify-center">
+              <div className="flex items-center gap-2">
+                <span className="font-heading text-base leading-none tracking-widest text-(--text-primary)">SUTURE</span>
+                <span className="text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono leading-none">
+                  v1.0.0
+                </span>
+              </div>
+              <span className="text-[9px] text-(--text-muted) tracking-wider font-heading mt-1 opacity-80 group-hover:text-cyan-400 transition-colors">
+                AUTONOMOUS PIPELINE HEALING
               </span>
             </div>
           </Link>
