@@ -114,17 +114,29 @@ flowchart LR
 
 ## 🧪 Testing & CI
 
+### 🛠️ Root Commands
+You can run checks for both frontend and backend from the root directory using the `Makefile`:
 ```bash
-# Dashboard
-cd dashboard
-npm run lint          # ESLint
-npm run typecheck     # TypeScript check
-npm run test:coverage # Coverage report
-npm run ci            # Full CI pipeline
+make test             # Run all tests (backend + frontend)
+make coverage         # Run all tests with coverage report
+make ci               # Run full CI pipeline (lint, typecheck, tests, build)
+```
 
-# Agent
+### 💻 Dashboard (Frontend)
+```bash
+cd dashboard
+npm run lint          # Run ESLint check
+npm run typecheck     # Run TypeScript type check
+npm run test:coverage # Run Jest coverage report
+npm run ci            # Run full frontend CI check (lint + typecheck + test)
+```
+
+### 🐍 Agent (Backend)
+```bash
 cd agent
-pytest --cov          # Run Python tests
+.venv/bin/ruff check .  # Lint python files using Ruff
+.venv/bin/mypy .        # Typecheck python files using Mypy
+pytest --cov            # Run pytest with coverage report
 ```
 
 ## 📁 Project Structure
