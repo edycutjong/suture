@@ -53,6 +53,7 @@ function deriveLogEntries(incidents: Incident[]): LogEntry[] {
 }
 
 export default function Dashboard() {
+  const [isLoading, setIsLoading] = useState(true);
   const [pipelines, setPipelines] = useState<Pipeline[]>(() => MOCK_PIPELINES);
   const [incidents, setIncidents] = useState<Incident[]>(() => MOCK_INCIDENTS);
   const [stats, setStats] = useState<Stats>(() => MOCK_STATS);
@@ -79,6 +80,8 @@ export default function Dashboard() {
       setAgentOnline(true);
     } catch {
       setAgentOnline(false);
+    } finally {
+      setIsLoading(false);
     }
     setLastRefresh(new Date());
   }, []);
@@ -188,76 +191,85 @@ export default function Dashboard() {
 
       {/* ── Main ─────────────────────────────────────────────── */}
       <main className="flex-1 max-w-7xl mx-auto w-full px-6 py-8 space-y-8">
+        {isLoading ? (
+          <DashboardSkeleton />
+        ) : (
+          <>
+            {/* KPI Stats */}
+            <div className="animate-card-entry" style={{ animationDelay: '0ms' }}>
+              <StatsPanel stats={stats} />
+            </div>
 
-        {/* KPI Stats */}
-        <StatsPanel stats={stats} />
-
-        {/* Pipeline Grid */}
-        <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="font-heading text-xs text-(--text-muted) tracking-widest">
-              MONITORED PIPELINES
-            </h2>
-            <span className="text-xs text-(--text-muted)">
-              {pipelines.length} connectors · auto-refresh 5s
-            </span>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {pipelines.map((pipeline, idx) => (
-              <div
-                key={pipeline.id}
-                className="animate-slide-up"
-                style={{ animationDelay: `${idx * 60}ms` }}
-              >
-                <PipelineCard pipeline={pipeline} />
+            {/* Pipeline Grid */}
+            <section className="animate-card-entry" style={{ animationDelay: '100ms' }}>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-heading text-xs text-(--text-muted) tracking-widest">
+                  MONITORED PIPELINES
+                </h2>
+                <span className="text-xs text-(--text-muted)">
+                  {pipelines.length} connectors · auto-refresh 5s
+                </span>
               </div>
-            ))}
-          </div>
-        </section>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {pipelines.map((pipeline, idx) => (
+                  <div
+                    key={pipeline.id}
+                    className="animate-card-entry"
+                    style={{ animationDelay: `${150 + idx * 60}ms` }}
+                  >
+                    <PipelineCard pipeline={pipeline} />
+                  </div>
+                ))}
+              </div>
+            </section>
 
-        {/* Demo Controls */}
-        <DemoControls
-          onSeed={handleSeed}
-          onBreak={handleBreak}
-          onHeal={handleHeal}
-        />
-
-        {/* Incidents + Schema Diff */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <section>
-            <h2 className="font-heading text-xs text-(--text-muted) tracking-widest mb-4">
-              INCIDENT HISTORY
-            </h2>
-            <IncidentTimeline incidents={incidents} />
-          </section>
-
-          <section>
-            <h2 className="font-heading text-xs text-(--text-muted) tracking-widest mb-4">
-              SCHEMA DIFF
-            </h2>
-            {diffIncident ? (
-              <SchemaDiffViewer
-                source={diffIncident.source_schema!}
-                destination={diffIncident.destination_schema!}
+            {/* Demo Controls */}
+            <div className="animate-card-entry" style={{ animationDelay: '400ms' }}>
+              <DemoControls
+                onSeed={handleSeed}
+                onBreak={handleBreak}
+                onHeal={handleHeal}
               />
-            ) : (
-              <div className="glass-card p-8 text-center">
-                <p className="text-(--text-muted) text-sm flex items-center justify-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-green-400" />
-                  <span>No schema drift detected — all schemas in sync</span>
-                </p>
-              </div>
-            )}
-          </section>
-        </div>
+            </div>
 
-        {/* Agent Log */}
-        <section>
-          <h2 className="font-heading text-xs text-(--text-muted) tracking-widest mb-4">
-            AGENT ACTIVITY
-          </h2>
-          <AgentLog entries={logEntries} />
-        </section>
+            {/* Incidents + Schema Diff */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <section className="animate-card-entry" style={{ animationDelay: '500ms' }}>
+                <h2 className="font-heading text-xs text-(--text-muted) tracking-widest mb-4">
+                  INCIDENT HISTORY
+                </h2>
+                <IncidentTimeline incidents={incidents} />
+              </section>
+
+              <section className="animate-card-entry" style={{ animationDelay: '600ms' }}>
+                <h2 className="font-heading text-xs text-(--text-muted) tracking-widest mb-4">
+                  SCHEMA DIFF
+                </h2>
+                {diffIncident ? (
+                  <SchemaDiffViewer
+                    source={diffIncident.source_schema!}
+                    destination={diffIncident.destination_schema!}
+                  />
+                ) : (
+                  <div className="glass-card p-8 text-center">
+                    <p className="text-(--text-muted) text-sm flex items-center justify-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-400" />
+                      <span>No schema drift detected — all schemas in sync</span>
+                    </p>
+                  </div>
+                )}
+              </section>
+            </div>
+
+            {/* Agent Log */}
+            <section className="animate-card-entry" style={{ animationDelay: '700ms' }}>
+              <h2 className="font-heading text-xs text-(--text-muted) tracking-widest mb-4">
+                AGENT ACTIVITY
+              </h2>
+              <AgentLog entries={logEntries} />
+            </section>
+          </>
+        )}
       </main>
 
       {/* ── Footer ───────────────────────────────────────────── */}
@@ -271,6 +283,123 @@ export default function Dashboard() {
           </span>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function DashboardSkeleton() {
+  return (
+    <div className="space-y-8 animate-cyber-boot">
+      {/* KPI Stats Skeleton */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {[...Array(4)].map((_, idx) => (
+          <div
+            key={idx}
+            className="glass-card p-4 cyber-scanline-container animate-cyber-pulse"
+            style={{ animationDelay: `${idx * 100}ms` }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-4 h-4 rounded bg-cyan-500/10" />
+              <div className="h-3 w-24 bg-slate-700/50 rounded" />
+            </div>
+            <div className="h-8 w-16 bg-slate-700/50 rounded mt-1" />
+          </div>
+        ))}
+      </div>
+
+      {/* Pipeline Grid Skeleton */}
+      <section>
+        <div className="flex items-center justify-between mb-4">
+          <div className="h-3 w-40 bg-slate-700/50 rounded" />
+          <div className="h-3 w-32 bg-slate-700/50 rounded" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, idx) => (
+            <div
+              key={idx}
+              className="glass-card p-5 cyber-scanline-container animate-cyber-pulse"
+              style={{ animationDelay: `${idx * 150}ms` }}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 bg-slate-700/50 rounded" />
+                  <span className="text-slate-700/50 text-xs">→</span>
+                  <div className="w-5 h-5 bg-slate-700/50 rounded" />
+                </div>
+                <div className="h-5 w-16 bg-slate-700/50 rounded-full" />
+              </div>
+              <div className="h-4 w-32 bg-slate-700/50 rounded mb-2" />
+              <div className="h-3 w-24 bg-slate-700/50 rounded font-mono mb-4" />
+              <div className="pt-3 border-t border-[var(--border-default)] flex justify-between">
+                <div className="h-3 w-16 bg-slate-700/50 rounded" />
+                <div className="h-3 w-12 bg-slate-700/50 rounded" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Demo Controls Skeleton */}
+      <div className="glass-card p-6 cyber-scanline-container animate-cyber-pulse">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <div className="h-4 w-48 bg-slate-700/50 rounded mb-2" />
+            <div className="h-3 w-80 bg-slate-700/50 rounded" />
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-20 bg-slate-700/50 rounded" />
+            <div className="h-8 w-20 bg-slate-700/50 rounded" />
+            <div className="h-8 w-20 bg-slate-700/50 rounded" />
+          </div>
+        </div>
+      </div>
+
+      {/* Incidents + Schema Diff Skeleton */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <div className="h-3 w-36 bg-slate-700/50 rounded mb-4" />
+          <div className="glass-card p-6 cyber-scanline-container animate-cyber-pulse space-y-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="flex gap-4">
+                <div className="w-2 h-2 rounded-full bg-slate-700/50 mt-1.5" />
+                <div className="flex-1 space-y-2">
+                  <div className="h-3 w-24 bg-slate-700/50 rounded" />
+                  <div className="h-3 w-full bg-slate-700/50 rounded" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div className="h-3 w-28 bg-slate-700/50 rounded mb-4" />
+          <div className="glass-card p-6 cyber-scanline-container animate-cyber-pulse space-y-4">
+            <div className="flex justify-between border-b border-[var(--border-default)] pb-4">
+              <div className="h-3 w-32 bg-slate-700/50 rounded" />
+              <div className="h-3 w-32 bg-slate-700/50 rounded" />
+            </div>
+            <div className="space-y-2">
+              <div className="h-3 w-full bg-slate-700/50 rounded" />
+              <div className="h-3 w-5/6 bg-slate-700/50 rounded" />
+              <div className="h-3 w-4/6 bg-slate-700/50 rounded" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Agent Activity Skeleton */}
+      <div>
+        <div className="h-3 w-32 bg-slate-700/50 rounded mb-4" />
+        <div className="glass-card p-4 cyber-scanline-container animate-cyber-pulse space-y-2">
+          {[...Array(4)].map((_, idx) => (
+            <div key={idx} className="flex gap-4">
+              <div className="h-3 w-12 bg-slate-700/50 rounded" />
+              <div className="h-3 w-16 bg-slate-700/50 rounded" />
+              <div className="h-3 w-2/3 bg-slate-700/50 rounded" />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -29,7 +29,7 @@ export function IncidentTimeline({ incidents }: IncidentTimelineProps) {
       {incidents.map((incident, idx) => (
         <div
           key={incident.id}
-          className="glass-card p-4 animate-slide-up"
+          className="glass-card p-4 animate-card-entry"
           style={{ animationDelay: `${idx * 100}ms` }}
         >
           {/* Header */}

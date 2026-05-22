@@ -56,7 +56,7 @@ export function AgentLog({ entries }: AgentLogProps) {
           return (
             <div
               key={idx}
-              className="flex gap-2 items-start animate-slide-right"
+              className="flex gap-2 items-start animate-telemetry"
               style={{ animationDelay: `${idx * 50}ms` }}
             >
               <span className="log-timestamp shrink-0 mt-0.5">

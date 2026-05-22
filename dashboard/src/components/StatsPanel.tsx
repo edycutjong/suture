@@ -63,7 +63,7 @@ export function StatsPanel({ stats }: StatsPanelProps) {
         return (
           <div
             key={item.key}
-            className="glass-card p-4 animate-slide-up"
+            className="glass-card p-4 animate-card-entry"
             style={{ animationDelay: `${idx * 80}ms` }}
           >
             <div className="flex items-center gap-2 mb-2">

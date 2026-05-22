@@ -97,6 +97,8 @@ describe('Dashboard Page', () => {
 
     // Initial render displays "DEMO MODE" before mock API resolves
     expect(screen.getByText('DEMO MODE')).toBeInTheDocument();
+    // Verify skeleton loader is active (mock data like 'Salesforce Sync' is not displayed yet)
+    expect(screen.queryByText('Salesforce Sync')).not.toBeInTheDocument();
 
     // Resolve mount effects
     await act(async () => {
