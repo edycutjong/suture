@@ -20,7 +20,7 @@ Real-time monitoring UI for the Suture autonomous pipeline healing agent. Visual
 ## Setup
 
 ```bash
-cp ../.env.example .env.local   # or set NEXT_PUBLIC_* vars directly
+cp .env.example .env.local   # or set NEXT_PUBLIC_* vars directly
 npm install
 npm run dev
 ```
@@ -32,8 +32,6 @@ Open [http://localhost:3000](http://localhost:3000).
 | Variable | Description |
 |---|---|
 | `NEXT_PUBLIC_AGENT_URL` | Agent API base URL (default: `http://localhost:8000`) |
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key |
 
 When the agent is unreachable the dashboard falls back to built-in mock data automatically — no config needed for demos.
 
@@ -93,10 +91,14 @@ All data is fetched from the agent backend (`NEXT_PUBLIC_AGENT_URL`):
 ```
 src/
 ├── app/
-│   ├── page.tsx          # Main dashboard page
+│   ├── page.tsx          # Landing page with interactive simulator
 │   ├── layout.tsx        # Root layout
-│   └── globals.css       # Tailwind base styles
-├── components/           # UI components (see table above)
+│   ├── globals.css       # Tailwind base styles
+│   ├── dashboard/
+│   │   └── page.tsx      # Main dashboard console page
+│   └── pitch/
+│       └── page.tsx      # Interactive pitch deck page
+├── components/           # UI components (StatsPanel, PipelineCard, etc.)
 ├── lib/
 │   ├── api.ts            # Agent API client
 │   ├── types.ts          # Shared TypeScript types
