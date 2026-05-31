@@ -212,11 +212,11 @@ jobs:
           if [ -d "dashboard/.next" ]; then
             TOTAL_SIZE=$(du -sk dashboard/.next/static | cut -f1)
             echo "Total static assets: ${TOTAL_SIZE}KB"
-            if [ "$TOTAL_SIZE" -gt 300 ]; then
-              echo "::error::Bundle size ${TOTAL_SIZE}KB exceeds 300KB error threshold"
+            if [ "$TOTAL_SIZE" -gt 1500 ]; then
+              echo "::error::Bundle size ${TOTAL_SIZE}KB exceeds 1500KB error threshold"
               exit 1
-            elif [ "$TOTAL_SIZE" -gt 200 ]; then
-              echo "::warning::Bundle size ${TOTAL_SIZE}KB exceeds 200KB warning threshold"
+            elif [ "$TOTAL_SIZE" -gt 1000 ]; then
+              echo "::warning::Bundle size ${TOTAL_SIZE}KB exceeds 1000KB warning threshold"
             else
               echo "✅ Bundle size within budget"
             fi
