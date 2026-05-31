@@ -7,7 +7,7 @@
 
   [![Live Demo](https://img.shields.io/badge/🚀_Live-Demo-06b6d4?style=for-the-badge)](https://suture.edycu.dev)
   [![Pitch Deck](https://img.shields.io/badge/📊_Pitch-Deck-f59e0b?style=for-the-badge)](https://suture.edycu.dev/pitch-deck)
-  [![YouTube Demo](https://img.shields.io/badge/▶_YouTube-Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/suture-demo)
+  [![YouTube Demo](https://img.shields.io/badge/▶_YouTube-Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/Mckrst7NF8Y)
   [![Built for Google Cloud Rapid Agent](https://img.shields.io/badge/Devpost-Google_Cloud_Rapid_Agent-8b5cf6?style=for-the-badge)](https://rapid-agent.devpost.com/)
 
   <br/>
@@ -26,9 +26,14 @@
 
 ## 📸 See it in Action
 
-<div align="center">
-  <img src="dashboard/public/og-image.png" alt="Suture Demo" width="100%">
-</div>
+### 🌐 Landing Page
+<img width="800" height="500" alt="landing-1" src="https://github.com/user-attachments/assets/b7df1db5-281c-482b-99a3-2983463eecc5" />
+
+### 🖥️ Dashboard — Command Center
+<img width="800" height="500" alt="dashboard-1" src="https://github.com/user-attachments/assets/880bb792-b3d4-492e-bf1a-417a99908597" />
+
+### 🤖 Agent Terminal — Autonomous Healing
+<img width="800" height="500" alt="agents" src="https://github.com/user-attachments/assets/4fe11950-e835-4511-b1d7-98aaa2e9bdca" />
 
 > **Self-healing infrastructure in action.** Schema Break → Webhook → Log Analysis → Schema Diff → AI Reasoning → API Patch → Re-Sync → ✅ GREEN.
 

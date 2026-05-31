@@ -1,4 +1,4 @@
-.PHONY: test test-be test-fe test-be-coverage test-fe-coverage coverage test-coverage ci ci-be ci-fe ci-agent ci-dashboard
+.PHONY: test test-be test-fe test-be-coverage test-fe-coverage coverage test-coverage ci ci-be ci-fe ci-agent ci-dashboard e2e lighthouse security-scan
 
 # Run all tests (backend + frontend)
 test: test-be test-fe
@@ -48,3 +48,22 @@ dev:
 		--kill-others \
 		"cd agent && .venv/bin/uvicorn main:app --reload --port 8000" \
 		"cd dashboard && npm run dev"
+
+# ── Advanced Testing & Security ─────────────────────────────
+e2e:
+	@echo "🎭 Running Playwright E2E tests (demo mode)..."
+	cd dashboard && npx playwright test
+
+lighthouse:
+	@echo "🔦 Running Lighthouse CI audit..."
+	cd dashboard && npx lhci autorun
+
+security-scan:
+	@echo "=== NPM AUDIT ==="
+	cd dashboard && npm audit --audit-level=high || true
+	@echo ""
+	@echo "=== PIP AUDIT ==="
+	pip-audit -r agent/requirements.txt || true
+	@echo ""
+	@echo "=== LICENSE CHECK ==="
+	cd dashboard && npx license-checker --production --failOn "GPL-3.0;AGPL-3.0" --summary || true
