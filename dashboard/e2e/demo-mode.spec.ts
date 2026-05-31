@@ -28,7 +28,7 @@ test.describe("Demo Mode", () => {
   });
 
   test("should render all critical UI sections", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/dashboard");
     await page.waitForLoadState("networkidle");
 
     // Header should exist

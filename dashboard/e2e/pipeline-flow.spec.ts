@@ -12,7 +12,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Pipeline Healing Flow", () => {
   test("should display pipeline cards with status badges", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/dashboard");
     await page.waitForLoadState("networkidle");
 
     // Pipeline cards should render (using demo/mock data)
@@ -27,7 +27,7 @@ test.describe("Pipeline Healing Flow", () => {
   });
 
   test("should show stats panel with metrics", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/dashboard");
     await page.waitForLoadState("networkidle");
 
     // Stats should show numeric values (pipelines, incidents, etc.)
@@ -36,7 +36,7 @@ test.describe("Pipeline Healing Flow", () => {
   });
 
   test("should render demo controls for triggering events", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/dashboard");
     await page.waitForLoadState("networkidle");
 
     // Look for buttons or interactive elements
@@ -46,7 +46,7 @@ test.describe("Pipeline Healing Flow", () => {
   });
 
   test("should have working navigation if present", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/dashboard");
     await page.waitForLoadState("networkidle");
 
     // Check for navigation links
