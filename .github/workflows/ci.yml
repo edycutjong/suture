@@ -86,6 +86,10 @@ jobs:
         working-directory: agent
 
     strategy:
+      # Report every interpreter. With fail-fast the first red version cancels the
+      # others, so a 3.11-only break is indistinguishable from a break on all three
+      # — which is exactly how the arize-phoenix failure below stayed ambiguous.
+      fail-fast: false
       matrix:
         python-version: ["3.11", "3.12", "3.13"]
 
