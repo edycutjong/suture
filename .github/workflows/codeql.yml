@@ -34,15 +34,11 @@ jobs:
       - name: Autobuild
         uses: github/codeql-action/autobuild@v3
 
+      # `upload` defaults to true: results go to GitHub code scanning, so findings
+      # appear in the Security tab and raise alerts. Do not set `upload: false` —
+      # that routes results to a workflow artifact only, leaving a green check that
+      # proves the scan ran but never surfaces anything it found.
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:${{ matrix.language }}"
-          upload: false
-          output: sarif-results
-
-      - name: Upload SARIF report
-        uses: actions/upload-artifact@v4
-        with:
-          name: sarif-${{ matrix.language }}
-          path: sarif-results
