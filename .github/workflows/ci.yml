@@ -104,7 +104,12 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
-          pip install ruff mypy
+          # Pin the linters. Unpinned, every run silently adopts whatever the newest
+          # release defaults to: ruff 0.16.0 widened its default rule set (adding I,
+          # UP, BLE, RUF) and turned a green tree into 53 style errors with no code
+          # change, which then blocked every Dependabot security merge. Bump this
+          # deliberately, with the accompanying fixes, not by accident.
+          pip install 'ruff<0.16' mypy
 
       - name: Lint
         run: ruff check .
