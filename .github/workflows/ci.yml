@@ -87,11 +87,18 @@ jobs:
 
     strategy:
       # Report every interpreter. With fail-fast the first red version cancels the
-      # others, so a 3.11-only break is indistinguishable from a break on all three
-      # — which is exactly how the arize-phoenix failure below stayed ambiguous.
+      # others, so a single-version break is indistinguishable from a break on all
+      # three — which is how the arize-phoenix failure below stayed ambiguous.
       fail-fast: false
       matrix:
-        python-version: ["3.11", "3.12", "3.13"]
+        # Match what this agent actually ships on: agent/Dockerfile is
+        # python:3.12-slim and the README documents Python 3.12. 3.11 was never a
+        # supported target, and arize-phoenix (pulled in unbounded via
+        # `arize-phoenix>=5.0.0`, currently resolving to 19.x) does not import on
+        # 3.11 — it raises `ValueError: mutable default <class 'mappingproxy'>`
+        # from a frozen dataclass at import time. That failure was gating every
+        # Dependabot security merge on a version nothing runs.
+        python-version: ["3.12", "3.13"]
 
     steps:
       - name: Checkout
