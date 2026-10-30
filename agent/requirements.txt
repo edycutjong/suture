@@ -8,5 +8,5 @@ arize-phoenix>=20.3.0
 openinference-instrumentation>=0.1.57
 python-dotenv>=1.2.3
 pytest>=9.1.1
-pytest-asyncio>=1.4.0
+pytest-asyncio>=1.4.1
 pytest-cov>=5.0.0
